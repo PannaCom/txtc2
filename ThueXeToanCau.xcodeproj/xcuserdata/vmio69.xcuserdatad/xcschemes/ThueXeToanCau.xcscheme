@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0810"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
-      parallelizeBuildables = "YES"
+      parallelizeBuildables = "NO"
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
-            buildForTesting = "YES"
+            buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3E4825501DC9F4C000849838"
+               BlueprintIdentifier = "3EA9F0FD1E050487001FE8EA"
                BuildableName = "ThueXeToanCau.app"
                BlueprintName = "ThueXeToanCau"
                ReferencedContainer = "container:ThueXeToanCau.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3E4825501DC9F4C000849838"
+            BlueprintIdentifier = "3EA9F0FD1E050487001FE8EA"
             BuildableName = "ThueXeToanCau.app"
             BlueprintName = "ThueXeToanCau"
             ReferencedContainer = "container:ThueXeToanCau.xcodeproj">
@@ -55,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3E4825501DC9F4C000849838"
+            BlueprintIdentifier = "3EA9F0FD1E050487001FE8EA"
             BuildableName = "ThueXeToanCau.app"
             BlueprintName = "ThueXeToanCau"
             ReferencedContainer = "container:ThueXeToanCau.xcodeproj">
@@ -74,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3E4825501DC9F4C000849838"
+            BlueprintIdentifier = "3EA9F0FD1E050487001FE8EA"
             BuildableName = "ThueXeToanCau.app"
             BlueprintName = "ThueXeToanCau"
             ReferencedContainer = "container:ThueXeToanCau.xcodeproj">
