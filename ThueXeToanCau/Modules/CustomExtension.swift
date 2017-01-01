@@ -2,11 +2,12 @@
 //  CustomExtension.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/28/16.
+//  Created by AnhHT on 12/28/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
 import Foundation
+import SwiftMessages
 
 extension String {
     func customNumberStyle() -> String {
@@ -26,5 +27,22 @@ extension String {
         customFormat.dateFormat = "dd/MM hh:mm"
 
         return customFormat.string(from: date!)
+    }
+
+    func serverDateTimeToDate() -> Date {
+        let serverFormat = DateFormatter()
+        serverFormat.dateFormat = "yyyy-MM-ddHH:mm:ss"
+        return serverFormat.date(from: self.replacingOccurrences(of: "T", with: ""))!
+    }
+}
+
+extension SwiftMessages {
+    public static func show(title: String, message: String, layout: MessageView.Layout, theme: Theme) {
+        SwiftMessages.show {
+            let view = MessageView.viewFromNib(layout: layout)
+            view.configureContent(title: title, body: message)
+            view.configureTheme(theme)
+            return view
+        }
     }
 }

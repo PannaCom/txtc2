@@ -2,7 +2,7 @@
 //  PassengerGetBookingInfo.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/19/16.
+//  Created by AnhHT on 12/19/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
@@ -14,17 +14,18 @@ import CoreLocation
 import SwiftyJSON
 import SCLAlertView
 import KRProgressHUD
+import SwiftLocation
 
-class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, PassengerTicketDelegate {
+class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableViewDataSource, PassengerTicketDelegate {
 
     @IBOutlet weak var tableView: UITableView!
 
     var tickets = [PassengerTicket]()
     var currentLocation: CLLocationCoordinate2D?
-    var locationManager: CLLocationManager?
 
     var name: String?
     var phone: String?
+    var firstLoading: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,9 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
             let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f",(self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f",(self?.currentLocation?.latitude)!),"car_hire_type" : "Chiều về,Đi chung", "order" : "1"]
 
             Alamofire.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+
                 if let ticketsResponse = JSON(response.result.value!).array {
+                    print(ticketsResponse)
                     for ticket in ticketsResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
                         self?.tickets.append(ticket)
@@ -56,23 +59,38 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
 
         currentLocation = CLLocationCoordinate2D.init()
 
-        locationManager = CLLocationManager.init()
-        locationManager?.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager?.delegate = self
-            locationManager?.distanceFilter = kCLDistanceFilterNone
-            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+        Location.getLocation(withAccuracy: .city, onSuccess: {foundLocation in
+            self.updateLocation(coordinate: foundLocation.coordinate)
+        }, onError: { error in
+            print(error)
+            Location.getLocation(withAccuracy: .ipScan, onSuccess: {ipLocation in
+                self.updateLocation(coordinate: ipLocation.coordinate)
+            }, onError: {error in
+                print(error)
+            }).start()
+        }).start()
 
-            locationManager?.startUpdatingLocation()
+    }
+
+    func updateLocation(coordinate: CLLocationCoordinate2D) {
+        self.currentLocation = coordinate
+
+        if firstLoading {
+            firstLoading = false
+            self.tableView.es_startPullToRefresh()
+        }
+
+        if self.tableView.expried {
+            self.tableView.es_startPullToRefresh()
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "passengerTicketCellId", for: indexPath) as? PassengerTicketCell {
-            let ticket = tickets[indexPath.row]
-            cell.updateUI(passengerTicket: ticket)
+        if let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID.PASSSENGER_TICKET, for: indexPath) as? PassengerTicketCell {
+            cell.updateUI(passengerTicket: tickets[indexPath.row])
             cell.delegate = self
+            cell.selectionStyle = .none
             return cell
         }
         else {
@@ -84,26 +102,13 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
         return tickets.count
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.first?.coordinate
-        if tableView.expried {
-             tableView.es_startPullToRefresh()
-        }
-
-    }
-
     func passengerBooking(bookingId: String) {
-        KRProgressHUD.showText(message: "Đang đặt vé ...")
+        KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, font: nil, message: "Đang đặt vé")
 
         Alamofire.request(URL_APP_API.BOOKING_LOG, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "name" : self.name!, "phone" : self.phone!], encoding: JSONEncoding.default, headers: nil).responseString { response in
-//            print(response)
 
             if response.result.isSuccess && response.result.value == "1"{
-
-                KRProgressHUD.showSuccess(message: "Xong")
-                let alert = SCLAlertView()
-                alert.showInfo("Đặt vé thành công", subTitle: "Tài xế sẽ liên hệ với bạn để xác nhận")
-
+                KRProgressHUD.showSuccess(progressHUDStyle: .whiteColor, maskType: .white, message: "Xong")
             }
             else {
                 KRProgressHUD.showError(message: "Lỗi")

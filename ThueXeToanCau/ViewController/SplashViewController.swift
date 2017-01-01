@@ -2,7 +2,7 @@
 //  SplashViewController.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/23/16.
+//  Created by AnhHT on 12/23/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SwiftMessages
 
 class SplashViewController: UIViewController {
 
@@ -57,8 +58,26 @@ class SplashViewController: UIViewController {
                         self.present(mainPassengerVc, animated: true, completion: nil)
                     }
                     if userRole == USER_ROLE.DRIVER {
-                        let mainDriverVc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_AUCTION)
-                        self.present(mainDriverVc, animated: true, completion: nil)
+
+                        Alamofire.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : userDefault.string(forKey: DRIVER_INFO.PHONE)!, "pass" : userDefault.string(forKey: DRIVER_INFO.PASS)!], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+
+                            if response.result.isSuccess {
+                                if let values:Array = JSON(response.result.value!).arrayObject {
+                                    if values.count > 0 {
+                                        STATIC_DATA.DRIVER_INFO = values[0] as! Dictionary<String, Any?>
+                                        let mainDriverVc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_AUCTION)
+                                        self.present(mainDriverVc, animated: true, completion: nil)
+                                    }
+                                    else{
+                                        SwiftMessages.show(title:"Lỗi", message: "Không thể đăng nhập", layout: .MessageViewIOS8, theme: .error)
+                                    }
+                                }
+                            }
+                            else {
+                                SwiftMessages.show(title:"Lỗi", message: "Không thể đăng nhập", layout: .MessageViewIOS8, theme: .error)
+                            }
+                        })
+
                     }
                 }
             }
@@ -92,7 +111,7 @@ class SplashViewController: UIViewController {
         }
 
         group.enter()
-        getDataInputFromURL(url: URL_APP_API.GET_CAR_TYPE){ (result: NSArray, isSuccess: Bool) in
+        getDataInputFromURL(url: URL_APP_API.GET_CAR_SIZE){ (result: NSArray, isSuccess: Bool) in
             if isSuccess {
                 let r:NSMutableArray = []
                 for i: String in result as! [String] {
@@ -106,7 +125,7 @@ class SplashViewController: UIViewController {
                         r.add(i + " chỗ")
                     }
                 }
-                STATIC_DATA.CAR_TYPE = r
+                STATIC_DATA.CAR_SIZE = r
             }
             else {
                 isSuccessAll = false
@@ -128,7 +147,7 @@ class SplashViewController: UIViewController {
         }
 
         group.enter()
-        getDataInputFromURLwithJSON(url: URL_APP_API.GET_AIRPORT, params: [:]) { (result: NSArray, isSuccess: Bool) in
+        getDataInputFromURLwithJSON(url: URL_APP_API.GET_AIRPORT) { (result: NSArray, isSuccess: Bool) in
             if isSuccess {
                 self.airportList = []
                 for airportName in result {
@@ -153,7 +172,7 @@ class SplashViewController: UIViewController {
         }
 
         group.enter()
-        getDataInputFromURLwithJSON(url: URL_APP_API.GET_NOTICE, params: [:]) { (result: NSArray, isSuccess: Bool) in
+        getDataInputFromURLwithJSON(url: URL_APP_API.GET_NOTICE) { (result: NSArray, isSuccess: Bool) in
             if isSuccess {
                 STATIC_DATA.NOTICE = result
             }
@@ -163,6 +182,28 @@ class SplashViewController: UIViewController {
 
             group.leave()
         }
+
+        group.enter()
+        getDataInputFromURL(url: URL_APP_API.GET_CAR_TYPE, completion: { (result: NSArray, isSuccess: Bool) in
+            if isSuccess {
+                STATIC_DATA.CAR_TYPE = result
+            }
+            else {
+                isSuccessAll = false
+            }
+            group.leave()
+        })
+
+        group.enter()
+        getDataInputFromURLwithJSON(url: URL_APP_API.GET_CAR_MADE, completion: { (result: NSArray, isSuccess: Bool) in
+            if isSuccess {
+                STATIC_DATA.CAR_MADE = result
+            }
+            else {
+                isSuccessAll = false
+            }
+            group.leave()
+        })
 
         group.notify(queue: .main, execute: {
             if isSuccessAll {
@@ -200,14 +241,11 @@ class SplashViewController: UIViewController {
         }
     }
 
-    func getDataInputFromURLwithJSON(url: String, params: NSDictionary, completion: @escaping (_ result: NSArray,_ isSuccess: Bool) -> Void) {
+    func getDataInputFromURLwithJSON(url: String, completion: @escaping (_ result: NSArray,_ isSuccess: Bool) -> Void) {
         Alamofire.request(url).responseJSON { response in
-            let r:NSArray = response.result.value as! NSArray
-            if response.result.isFailure {
-                print("Error Load Data: \(response.result.error)")
-            }
 
             if response.result.isSuccess {
+                let r:NSArray = response.result.value as! NSArray
                 completion (r.value(forKey: "name") as! NSArray, true)
             }
             else {

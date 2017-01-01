@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */; };
+		3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */; };
+		3E72B6C71E18E691006EAB6B /* DriverBookingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */; };
 		3E9708F81E1362AF006F25DA /* ControllersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9708F31E1362AF006F25DA /* ControllersProvider.swift */; };
 		3E9708F91E1362AF006F25DA /* TabSwitcherItemsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9708F41E1362AF006F25DA /* TabSwitcherItemsProvider.swift */; };
 		3E9708FA1E1362AF006F25DA /* TabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9708F61E1362AF006F25DA /* TabsViewController.swift */; };
@@ -44,6 +47,9 @@
 
 /* Begin PBXFileReference section */
 		09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThueXeToanCau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverAuctionCell.swift; sourceTree = "<group>"; };
+		3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrivierAuctionSuccess.swift; sourceTree = "<group>"; };
+		3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverBookingCell.swift; sourceTree = "<group>"; };
 		3E9708F31E1362AF006F25DA /* ControllersProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllersProvider.swift; sourceTree = "<group>"; };
 		3E9708F41E1362AF006F25DA /* TabSwitcherItemsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherItemsProvider.swift; sourceTree = "<group>"; };
 		3E9708F61E1362AF006F25DA /* TabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				3E9709041E1362FE006F25DA /* PassengerTicketCell.swift */,
+				3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */,
+				3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -177,13 +185,14 @@
 		3E9709071E136341006F25DA /* Driver */ = {
 			isa = PBXGroup;
 			children = (
+				3E97090D1E136341006F25DA /* DriverLogin.swift */,
+				3E97090E1E136341006F25DA /* DriverRegister.swift */,
 				3E9709081E136341006F25DA /* DriverAuction.swift */,
+				3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */,
 				3E9709091E136341006F25DA /* DriverBooking.swift */,
 				3E97090A1E136341006F25DA /* DriverBookingInfo.swift */,
 				3E97090B1E136341006F25DA /* DriverBookingMap.swift */,
 				3E97090C1E136341006F25DA /* DriverGetBooking.swift */,
-				3E97090D1E136341006F25DA /* DriverLogin.swift */,
-				3E97090E1E136341006F25DA /* DriverRegister.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -404,11 +413,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E9709221E136341006F25DA /* PassengerBooking.swift in Sources */,
+				3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */,
 				3E97091D1E136341006F25DA /* DriverBookingInfo.swift in Sources */,
 				3E9709201E136341006F25DA /* DriverLogin.swift in Sources */,
 				3E97091F1E136341006F25DA /* DriverGetBooking.swift in Sources */,
 				3E97092B1E136341006F25DA /* SelectRole.swift in Sources */,
 				3E97091B1E136341006F25DA /* DriverAuction.swift in Sources */,
+				3E72B6C71E18E691006EAB6B /* DriverBookingCell.swift in Sources */,
 				3E97092A1E136341006F25DA /* PassengerSelectActivity.swift in Sources */,
 				3E9709051E1362FE006F25DA /* PassengerTicketCell.swift in Sources */,
 				3E9708FB1E1362AF006F25DA /* UIViewControllerCustom.swift in Sources */,
@@ -419,6 +430,7 @@
 				3E9708F91E1362AF006F25DA /* TabSwitcherItemsProvider.swift in Sources */,
 				3E9708F81E1362AF006F25DA /* ControllersProvider.swift in Sources */,
 				3E9709251E136341006F25DA /* PassengerBookingResult.swift in Sources */,
+				3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */,
 				3E9709271E136341006F25DA /* PassengerGetBookingInfo.swift in Sources */,
 				3E9709281E136341006F25DA /* PassengerGetBookingMap.swift in Sources */,
 				3E9709011E1362DA006F25DA /* PassengerTicket.swift in Sources */,

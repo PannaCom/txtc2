@@ -25,6 +25,7 @@ target 'ThueXeToanCau' do
     pod 'DateTimePicker'
     pod 'DropDown'
     pod 'SCLAlertView'
-#    pod 'CountdownLabel'
-    
+    pod 'CountdownLabel'
+    pod 'SwiftLocation'
+    pod 'SwiftMessages'
 end

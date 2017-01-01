@@ -2,19 +2,19 @@
 //  PassengerBookingInfo.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/18/16.
+//  Created by AnhHT on 12/18/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
-//import UITextField_Navigation
 import DateTimePicker
 import GooglePlaces
 import DropDown
 import SCLAlertView
 import Alamofire
+import SwiftMessages
 
 class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
 
@@ -32,7 +32,6 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
     @IBOutlet var dateFromTextField: UITextField!
     @IBOutlet var dateToTextField: UITextField!
 
-    @IBOutlet var errorLabel: UILabel!
     @IBOutlet var bookingButton: UIButton!
 
     @IBOutlet var dateToLabel: UILabel!
@@ -116,7 +115,6 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
             .subscribe(onNext: {
 
                 if self.checkTextFieldEmpty() {
-                    self.errorLabel.isHidden = true
                     var carType:String = self.carTypeTextField.text!
                     carType = carType.substring(to: (carType.range(of: " ")?.lowerBound)!)
                     var airportName:String = ""
@@ -181,13 +179,13 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                             NotificationCenter.default.post(name: Notification.Name(NOTIFICATION_STRING.PASSENGER_BOOKING_DONE), object: bookingResult)
                         }
                         else {
-
+                            SwiftMessages.show(title: "Lỗi", message: "Hãy kiểm tra lại kết nội internet", layout: .MessageViewIOS8, theme: .error)
                         }
 
                     }
                 }
                 else {
-                    self.errorLabel?.isHidden = false
+                    SwiftMessages.show(title: "Lỗi", message: "Hãy điền đầy đủ thông tin", layout: .MessageViewIOS8, theme: .error)
                 }
             })
             .addDisposableTo(disposeBag)
@@ -343,7 +341,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
             }
         }
 
-        carTypeDropdown.dataSource = STATIC_DATA.CAR_TYPE as! [String]
+        carTypeDropdown.dataSource = STATIC_DATA.CAR_SIZE as! [String]
         carTypeDropdown.selectionAction = { [unowned self] (index, item) in
             self.carTypeTextField.text = item
         }

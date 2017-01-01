@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>CountdownLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>DateTimePicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -59,6 +64,21 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftLocation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftMessages-SwiftMessages.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SwiftMessages.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,7 +92,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0A67E75980911993238E7503A93E1615</key>
+		<key>03FB379C541E039EBC48C8E633C90C37</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +102,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1FD3ED46BCF29C41223D4B954BF7325E</key>
+		<key>3F512C69C6F916FFEC7EAB95E16839B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,7 +112,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>680BBA05A108D83F0DDE7D1CE42A778B</key>
+		<key>516CB67AA2C00DFCC18B75608707A544</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -107,7 +127,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>89A565A0826338694670BC2A8DE46409</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8F254C70EA7289F49F560FEF44F5E03E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9FA73695D1E57996C128686ADB24DCC2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A97EE20FB55010BAA46448F304B98F13</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,17 +152,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC5F661DF4B967FCAF75164A346B5DBB</key>
+		<key>D846DF14439372A346E51AA4EE66D7FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D340298B72C2C51CA8E223FD2CCBCA66</key>
+		<key>DEB6DB42880BDFE09092546A3C20C9DC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DD79923EA1A4131099C611F828A66603</key>
+		<key>EF68923A94284D52910F9AC63A416AB9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F44C5200F1D49905A1FBCE5662B7C127</key>
 		<dict>
 			<key>primary</key>
 			<true/>

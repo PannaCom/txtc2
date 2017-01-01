@@ -2,7 +2,7 @@
 //  PassengerTicketCell.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/28/16.
+//  Created by AnhHT on 12/28/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
@@ -21,13 +21,17 @@ class PassengerTicketCell: UITableViewCell {
     @IBOutlet var placeFromLabel: UILabel!
     @IBOutlet var placeToLabel: UILabel!
     @IBOutlet var carSizeLabel: UILabel!
-    @IBOutlet var priceLabel: UITextField!
-    @IBOutlet var dateFromLabel: UITextField!
-    @IBOutlet var dateToLabel: UITextField!
+    @IBOutlet var priceLabel: UILabel!
+    @IBOutlet var dateFromLabel: UILabel!
+    @IBOutlet var dateToLabel: UILabel!
     var id: String?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        dateFromLabel.layer.borderWidth = 1
+        dateFromLabel.layer.borderColor = UIColor.black.cgColor
+        dateToLabel.layer.borderWidth = 1
+        dateToLabel.layer.borderColor = UIColor.black.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -40,8 +44,18 @@ class PassengerTicketCell: UITableViewCell {
         hireTypeLabel.text = "Hình thức thuê: " + passengerTicket.hireType
         placeFromLabel.text = passengerTicket.placeFrom
         placeToLabel.text = passengerTicket.placeTo
-        carSizeLabel.text = passengerTicket.carSize
-        priceLabel.text = passengerTicket.price.customNumberStyle() + " đ"
+        if passengerTicket.carSize == "4" {
+            carSizeLabel.text = "4 chỗ (giá siêu rẻ, không cốp)"
+        }
+        else {
+            if passengerTicket.carSize == "5" {
+                carSizeLabel.text = "5 chỗ (có cốp)"
+            }
+            else {
+                carSizeLabel.text = passengerTicket.carSize + " chỗ"
+            }
+        }
+        priceLabel.text = passengerTicket.priceCurrent.customNumberStyle() + " đ"
         dateFromLabel.text = passengerTicket.dateFrom.serverDateTimeToFormatddMMhhmm()
         dateToLabel.text = passengerTicket.dateTo.serverDateTimeToFormatddMMhhmm()
         id = passengerTicket.id

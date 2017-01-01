@@ -2,7 +2,7 @@
 //  ControllersProvider.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/19/16.
+//  Created by AnhHT on 12/19/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
@@ -36,7 +36,7 @@ class TabsContentViewControllersProvider {
 
         let infoViewController = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_BOOKING_INFO)
 
-        let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_GET_BOOKING_MAP)
+        let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.PASSENGER_BOOKING_MAP)
 
         return [infoViewController, mapViewController]
     }()

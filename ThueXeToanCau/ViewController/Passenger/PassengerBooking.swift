@@ -2,11 +2,10 @@
 //  PassengerBooking.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 12/17/16.
+//  Created by AnhHT on 12/17/16.
 //  Copyright © 2016 AnhHT. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import RxSwift
 

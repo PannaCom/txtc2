@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.2.0)
   - ColorMatchTabs (2.0)
+  - CountdownLabel (1.2.0)
   - DateTimePicker (1.0.3)
   - DropDown (2)
   - ESPullToRefresh (2.4)
@@ -15,16 +16,19 @@ PODS:
   - GooglePlaces (2.1.1):
     - GoogleMaps/Base (= 2.1.1)
   - KRProgressHUD (2.1.0)
-  - RxCocoa (3.0.1):
-    - RxSwift (~> 3.0)
-  - RxSwift (3.0.1)
+  - RxCocoa (3.1.0):
+    - RxSwift (~> 3.1)
+  - RxSwift (3.1.0)
   - SCLAlertView (0.7.0)
+  - SwiftLocation (1.1.1)
+  - SwiftMessages (3.1.3)
   - SwiftyJSON (3.1.3)
   - TextFieldEffects (1.3.0)
 
 DEPENDENCIES:
   - Alamofire
   - ColorMatchTabs
+  - CountdownLabel
   - DateTimePicker
   - DropDown
   - ESPullToRefresh
@@ -35,12 +39,15 @@ DEPENDENCIES:
   - RxCocoa
   - RxSwift
   - SCLAlertView
+  - SwiftLocation
+  - SwiftMessages
   - SwiftyJSON
   - TextFieldEffects
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   ColorMatchTabs: d66f857e49d00d9fe956b930d0ac78f4b1172f54
+  CountdownLabel: 7dcc9bb2c8f488af7a4d29053f41c014ea0b973d
   DateTimePicker: 23ca73cee22ff485e9e2fbfa4e4082845ce65e95
   DropDown: 744784d9c9aa505100e942c16acd05430cbb2f0a
   ESPullToRefresh: e7c754b4c43dec6b945f3cfdb7ddb0cacb18a43f
@@ -48,12 +55,14 @@ SPEC CHECKSUMS:
   GooglePlacePicker: 665f39f931f2df32f9dd3fcc45f7e8abf71e535c
   GooglePlaces: 35636d86e5020cba3856eb988c09a5491de0a65a
   KRProgressHUD: c3a59d192ffe1d470efe2525217f0d3aab06418d
-  RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
-  RxSwift: af5680055c4ad04480189c52d28385b1029493a6
+  RxCocoa: 50d7564866da9299161e86a263ce12a0873904d8
+  RxSwift: 83ff553e7593fdfdcb2562933a64c0284dffdadc
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
+  SwiftLocation: aac16955b508c46b82bf07fcceb7e2a3b382b8d5
+  SwiftMessages: 9d03bb95d394ac60f9c20335e2305dfea9cac70a
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
   TextFieldEffects: ef594746f17997c813e07633f8ae5acaf9b04f27
 
-PODFILE CHECKSUM: 0dd96c804684c2def51482cb33d31c0131f2f9a5
+PODFILE CHECKSUM: ac9e690e4cdace32c8e86eb2c32b5c23954baf25
 
 COCOAPODS: 1.2.0.beta.1
