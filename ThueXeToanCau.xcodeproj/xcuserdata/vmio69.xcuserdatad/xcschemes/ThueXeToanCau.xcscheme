@@ -3,15 +3,15 @@
    LastUpgradeVersion = "0820"
    version = "1.7">
    <BuildAction
-      parallelizeBuildables = "NO"
+      parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "NO"
             buildForRunning = "YES"
             buildForProfiling = "YES"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EA9F0FD1E050487001FE8EA"

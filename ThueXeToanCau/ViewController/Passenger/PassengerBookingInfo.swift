@@ -72,7 +72,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        formatTextFields(textFileds: [carHireTypeTextField, placeFromTextField, placeToTextField, carTypeTextField, whoHireTextField, dateFromTextField, dateToTextField])
+        formatTextFields(textFileds: [nameTextField, phoneTextField, carHireTypeTextField, placeFromTextField, placeToTextField, carTypeTextField, whoHireTextField, dateFromTextField, dateToTextField])
 
         nameTextField.delegate = self
         phoneTextField.delegate = self
@@ -126,7 +126,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
 
                     var dateTo:String = ""
                     if self.carHireTypeTextField.text == "Khứ hồi" || self.placeToTextField.text == "Khứ hồi" {
-                        dateTo = self.dateToTextField.text!
+                        dateTo = self.dateToString
                     }
                     else {
                         dateTo = (self.dateTimeServerFormat?.string(from: self.dateToSampleDatetime as! Date))!
@@ -147,8 +147,8 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                                   "lat2" : self.toLatString,
                                   "airport_name" : airportName,
                                   "airport_way" : airportWay]
-
-                    Alamofire.request(URL_APP_API.BOOKING_TICKET, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseString { response in
+                    print(params)
+                    AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_TICKET, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseString { response in
                         print(response.result.value!)
 
                         if response.result.isFailure {
@@ -365,7 +365,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                     }
 
                     if let place = place {
-                        print("Place coordinate \(place.coordinate)")
+//                        print("Place coordinate \(place.coordinate)")
                         self.placeFromCoordinate = place.coordinate
                         self.fromLonString = String.init(format: "%.6f", self.placeFromCoordinate.longitude)
                         self.fromLatString = String.init(format: "%.6f", self.placeFromCoordinate.latitude)
@@ -391,7 +391,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                     }
 
                     if let place = place {
-                        print("Place coordinate \(place.coordinate)")
+//                        print("Place coordinate \(place.coordinate)")
                         self.placeToCoordinate = place.coordinate
                         self.toLonString = String.init(format: "%.6f", self.placeToCoordinate.longitude)
                         self.toLatString = String.init(format: "%.6f", self.placeToCoordinate.latitude)
@@ -451,7 +451,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                 if self.textFieldSelected == self.dateToTextField {
                     self.dateToString = (self.dateTimeServerFormat?.string(from: date))!
                 }
-                self.dateToSampleDatetime = date.addingTimeInterval(4000) as NSDate?
+                self.dateToSampleDatetime = date.addingTimeInterval(3600*24) as NSDate?
                 picker.isHidden = true
             }
             return false
@@ -505,8 +505,7 @@ extension PassengerBookingInfo: GMSAutocompleteFetcherDelegate {
             placeToDropdown.dataSource = r.value(forKey: "name") as! [String]
             placeToDropdown.show()
         }
-
-        print(predictions)
+//        print(predictions)
     }
 
     func didFailAutocompleteWithError(_ error: Error) {

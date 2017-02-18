@@ -24,7 +24,12 @@ class DriverBooking: UIViewControllerCustom {
         let subVc = TabsViewController(typeView: TYPE_VIEW.DRIVER_BOOKING)
 
         self.add(asChildViewController: subVc)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(bookingDone), name: Notification.Name(NOTIFICATION_STRING.DRIVER_BOOKING_DONE), object: nil)
     }
 
+    func bookingDone() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 

@@ -19,12 +19,18 @@ extension String {
         return currencyFormat.string(from: NSNumber.init(value: Int(self)!))!
     }
 
-    func serverDateTimeToFormatddMMhhmm() -> String {
+    func serverDateTimeTo(format: String) -> String {
         let serverFormat = DateFormatter()
-        serverFormat.dateFormat = "yyyy-MM-ddHH:mm:ss"
+        if self.characters.count > 20 {
+            serverFormat.dateFormat = "yyyy-MM-ddHH:mm:ss.SSS"
+        }
+        else {
+            serverFormat.dateFormat = "yyyy-MM-ddHH:mm:ss"
+        }
+
         let date = serverFormat.date(from: self.replacingOccurrences(of: "T", with: ""))
         let customFormat = DateFormatter()
-        customFormat.dateFormat = "dd/MM hh:mm"
+        customFormat.dateFormat = format
 
         return customFormat.string(from: date!)
     }
@@ -46,3 +52,4 @@ extension SwiftMessages {
         }
     }
 }
+

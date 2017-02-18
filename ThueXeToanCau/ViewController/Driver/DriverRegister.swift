@@ -41,6 +41,8 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
     var carModelList = NSArray()
     let disposeBag = DisposeBag()
 
+//    var isEditing: Bool?// = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,7 +66,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
                         carSize = carSize.substring(to: (carSize.range(of: " ")?.lowerBound)!)
                         let params:Dictionary<String, String> = ["name" : self.nameTextField.text!, "phone" : self.phoneTextField.text!, "pass" : self.passTextField.text!, "car_made" : self.carMadeTextField.text!, "car_model" : self.carModelTextField.text!, "car_size" : carSize, "car_year" : self.carYearTextField.text!, "car_number" : self.carNumberTextField.text!, "car_type" : self.carTypeTextField.text!, "card_identify" : self.identifyTextField.text!, "license" : self.licenseTextField.text!, "regId" : "test", "os" : DEVICE_OS.iOS]
                         print(params)
-                        Alamofire.request(URL_APP_API.REGISTER_DRIVER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                        AlamofireManager.sharedInstance.manager.request(URL_APP_API.REGISTER_DRIVER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
                             if response.result.isSuccess {
                                 SwiftMessages.show(title: "", message: "Đăng ký thành công", layout: .StatusLine, theme: .success)
                             }
@@ -116,7 +118,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
 
     func checkPassword() -> Bool {
         if (passTextField.text?.characters.count)! < CONFIG_DATA.PASSWORD_MIN_LENGTH {
-            SwiftMessages.show(title: "Lỗi: Mật khẩu quá ngắn", message: "Hãy nhập mật khẩu ít nhất có \(CONFIG_DATA.PASSWORD_MIN_LENGTH) ký tự", layout: .MessageViewIOS8, theme: .error)
+            SwiftMessages.show(title: "Lỗi: Mật khẩu quá ngắn", message: "Hãy nhập mật khẩu có ít nhất \(CONFIG_DATA.PASSWORD_MIN_LENGTH) ký tự", layout: .MessageViewIOS8, theme: .error)
             return false
         }
         if passTextField.text != confirmPassTextField.text {
@@ -191,7 +193,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
 
     func searchCarModel(for carMade: String) {
         KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang tải dữ liệu")
-        Alamofire.request(URL_APP_API.GET_CAR_MODEL, method: HTTPMethod.post, parameters: ["keyword" : carMade], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_CAR_MODEL, method: HTTPMethod.post, parameters: ["keyword" : carMade], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
             KRProgressHUD.dismiss()
             if response.result.isSuccess {
                 let r:NSArray = response.result.value as! NSArray

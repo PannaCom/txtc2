@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62C4111E1F81380059E673 /* DPDraggableButton.swift */; };
 		3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */; };
 		3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */; };
 		3E72B6C71E18E691006EAB6B /* DriverBookingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */; };
@@ -42,14 +43,21 @@
 		3EA9F1091E050487001FE8EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EA9F1081E050487001FE8EA /* Assets.xcassets */; };
 		3EA9F10C1E050487001FE8EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EA9F10A1E050487001FE8EA /* LaunchScreen.storyboard */; };
 		3EA9F1141E051512001FE8EA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA9F1131E051512001FE8EA /* Config.swift */; };
+		3EBEDB8A1E1A5D3B0005C070 /* LogPassengerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBEDB891E1A5D3B0005C070 /* LogPassengerCell.swift */; };
+		3EBEDB8C1E1A647F0005C070 /* DriverLogPassengerBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBEDB8B1E1A647F0005C070 /* DriverLogPassengerBooking.swift */; };
+		3EBEDB8E1E1A67270005C070 /* LogPassenger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBEDB8D1E1A67270005C070 /* LogPassenger.swift */; };
+		3EC801CD1E1BA92400EA7F29 /* txtcCer.cer in Resources */ = {isa = PBXBuildFile; fileRef = 3EC801CC1E1BA92400EA7F29 /* txtcCer.cer */; };
+		3EC801CF1E1BB37800EA7F29 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC801CE1E1BB37800EA7F29 /* AlamofireManager.swift */; };
+		3EC801D31E1CD46300EA7F29 /* txtcCer.der in Resources */ = {isa = PBXBuildFile; fileRef = 3EC801D21E1CD46300EA7F29 /* txtcCer.der */; };
 		CF6B2AC6AAF924877B936BFC /* Pods_ThueXeToanCau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThueXeToanCau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E62C4111E1F81380059E673 /* DPDraggableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDraggableButton.swift; sourceTree = "<group>"; };
 		3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverAuctionCell.swift; sourceTree = "<group>"; };
 		3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrivierAuctionSuccess.swift; sourceTree = "<group>"; };
-		3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverBookingCell.swift; sourceTree = "<group>"; };
+		3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DriverBookingCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3E9708F31E1362AF006F25DA /* ControllersProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllersProvider.swift; sourceTree = "<group>"; };
 		3E9708F41E1362AF006F25DA /* TabSwitcherItemsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabSwitcherItemsProvider.swift; sourceTree = "<group>"; };
 		3E9708F61E1362AF006F25DA /* TabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabsViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +92,12 @@
 		3EA9F10B1E050487001FE8EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EA9F10D1E050487001FE8EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EA9F1131E051512001FE8EA /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		3EBEDB891E1A5D3B0005C070 /* LogPassengerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LogPassengerCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3EBEDB8B1E1A647F0005C070 /* DriverLogPassengerBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DriverLogPassengerBooking.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3EBEDB8D1E1A67270005C070 /* LogPassenger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LogPassenger.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		3EC801CC1E1BA92400EA7F29 /* txtcCer.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = txtcCer.cer; sourceTree = "<group>"; };
+		3EC801CE1E1BB37800EA7F29 /* AlamofireManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
+		3EC801D21E1CD46300EA7F29 /* txtcCer.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = txtcCer.der; sourceTree = "<group>"; };
 		3EF4AA1D1E10C53700B4FB81 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Pods/../build/Debug-iphoneos/RxSwift/RxSwift.framework"; sourceTree = "<group>"; };
 		3EF4AA1F1E10C54500B4FB81 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = "Pods/../build/Debug-iphoneos/RxCocoa/RxCocoa.framework"; sourceTree = "<group>"; };
 		3EF4AA211E10C55200B4FB81 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Alamofire/Alamofire.framework"; sourceTree = "<group>"; };
@@ -118,8 +132,10 @@
 		3E709BF71E07745F000A6588 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				3E62C4111E1F81380059E673 /* DPDraggableButton.swift */,
 				3E9708F11E1362AF006F25DA /* TabsView */,
 				3E97092D1E13C33A006F25DA /* CustomExtension.swift */,
+				3EC801CE1E1BB37800EA7F29 /* AlamofireManager.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -157,6 +173,7 @@
 				3E9708FD1E1362DA006F25DA /* Airport.swift */,
 				3E9708FE1E1362DA006F25DA /* PassengerTicket.swift */,
 				3E9708FF1E1362DA006F25DA /* TabItem.swift */,
+				3EBEDB8D1E1A67270005C070 /* LogPassenger.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -167,6 +184,7 @@
 				3E9709041E1362FE006F25DA /* PassengerTicketCell.swift */,
 				3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */,
 				3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */,
+				3EBEDB891E1A5D3B0005C070 /* LogPassengerCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -190,9 +208,10 @@
 				3E9709081E136341006F25DA /* DriverAuction.swift */,
 				3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */,
 				3E9709091E136341006F25DA /* DriverBooking.swift */,
-				3E97090A1E136341006F25DA /* DriverBookingInfo.swift */,
 				3E97090B1E136341006F25DA /* DriverBookingMap.swift */,
+				3E97090A1E136341006F25DA /* DriverBookingInfo.swift */,
 				3E97090C1E136341006F25DA /* DriverGetBooking.swift */,
+				3EBEDB8B1E1A647F0005C070 /* DriverLogPassengerBooking.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -216,6 +235,8 @@
 		3E9DD42A1E051F1500F76820 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				3EC801D21E1CD46300EA7F29 /* txtcCer.der */,
+				3EC801CC1E1BA92400EA7F29 /* txtcCer.cer */,
 				3EA9F1081E050487001FE8EA /* Assets.xcassets */,
 				3EA9F10A1E050487001FE8EA /* LaunchScreen.storyboard */,
 				3EA9F10D1E050487001FE8EA /* Info.plist */,
@@ -323,13 +344,17 @@
 				TargetAttributes = {
 					3EA9F0FD1E050487001FE8EA = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = FUH6R3ZC9Y;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
 			buildConfigurationList = 3EA9F0F91E050487001FE8EA /* Build configuration list for PBXProject "ThueXeToanCau" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -351,6 +376,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EC801D31E1CD46300EA7F29 /* txtcCer.der in Resources */,
+				3EC801CD1E1BA92400EA7F29 /* txtcCer.cer in Resources */,
 				3EA9F10C1E050487001FE8EA /* LaunchScreen.storyboard in Resources */,
 				3EA9F1091E050487001FE8EA /* Assets.xcassets in Resources */,
 				3EA9F1071E050487001FE8EA /* Main.storyboard in Resources */,
@@ -417,6 +444,7 @@
 				3E97091D1E136341006F25DA /* DriverBookingInfo.swift in Sources */,
 				3E9709201E136341006F25DA /* DriverLogin.swift in Sources */,
 				3E97091F1E136341006F25DA /* DriverGetBooking.swift in Sources */,
+				3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */,
 				3E97092B1E136341006F25DA /* SelectRole.swift in Sources */,
 				3E97091B1E136341006F25DA /* DriverAuction.swift in Sources */,
 				3E72B6C71E18E691006EAB6B /* DriverBookingCell.swift in Sources */,
@@ -425,9 +453,12 @@
 				3E9708FB1E1362AF006F25DA /* UIViewControllerCustom.swift in Sources */,
 				3E9709231E136341006F25DA /* PassengerBookingInfo.swift in Sources */,
 				3E9709211E136341006F25DA /* DriverRegister.swift in Sources */,
+				3EBEDB8A1E1A5D3B0005C070 /* LogPassengerCell.swift in Sources */,
 				3E9709291E136341006F25DA /* PassengerLogin.swift in Sources */,
 				3E9709261E136341006F25DA /* PassengerGetBooking.swift in Sources */,
+				3EBEDB8E1E1A67270005C070 /* LogPassenger.swift in Sources */,
 				3E9708F91E1362AF006F25DA /* TabSwitcherItemsProvider.swift in Sources */,
+				3EBEDB8C1E1A647F0005C070 /* DriverLogPassengerBooking.swift in Sources */,
 				3E9708F81E1362AF006F25DA /* ControllersProvider.swift in Sources */,
 				3E9709251E136341006F25DA /* PassengerBookingResult.swift in Sources */,
 				3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */,
@@ -437,6 +468,7 @@
 				3E97092C1E136341006F25DA /* SplashViewController.swift in Sources */,
 				3E9709021E1362DA006F25DA /* TabItem.swift in Sources */,
 				3E97091E1E136341006F25DA /* DriverBookingMap.swift in Sources */,
+				3EC801CF1E1BB37800EA7F29 /* AlamofireManager.swift in Sources */,
 				3EA9F1021E050487001FE8EA /* AppDelegate.swift in Sources */,
 				3E9709241E136341006F25DA /* PassengerBookingMap.swift in Sources */,
 				3E9708FA1E1362AF006F25DA /* TabsViewController.swift in Sources */,
@@ -568,13 +600,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = FUH6R3ZC9Y;
+				DEVELOPMENT_TEAM = H3K8K5GR53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThueXeToanCau/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.MinhViet.ThueXeToanCau;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -588,15 +620,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = FUH6R3ZC9Y;
+				DEVELOPMENT_TEAM = H3K8K5GR53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ThueXeToanCau/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.MinhViet.ThueXeToanCau;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

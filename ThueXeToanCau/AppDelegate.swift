@@ -9,7 +9,7 @@
 import UIKit
 import GoogleMaps
 import GooglePlaces
-
+import Siren
 
 
 @UIApplicationMain
@@ -22,6 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         GMSServices.provideAPIKey(GOOGLE_API.KEY)
         GMSPlacesClient.provideAPIKey(GOOGLE_API.KEY)
+
+        let siren = Siren.sharedInstance
+        siren.forceLanguageLocalization = SirenLanguageType.Vietnamese
+        siren.alertType = SirenAlertType.force
+        siren.checkVersion(checkType: .immediately)
 
         return true
     }
@@ -38,10 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        Siren.sharedInstance.checkVersion(checkType: .immediately)
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        Siren.sharedInstance.checkVersion(checkType: .immediately)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

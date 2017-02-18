@@ -72,8 +72,8 @@ class DriverAuctionCell: UITableViewCell {
         }
         priceBuyLabel.text = ticket.priceBook.customNumberStyle() + " đ"
         priceAuction.text = ticket.priceCurrent.customNumberStyle() + " đ"
-        dateFromLabel.text = ticket.dateFrom.serverDateTimeToFormatddMMhhmm()
-        dateToLabel.text = ticket.dateTo.serverDateTimeToFormatddMMhhmm()
+        dateFromLabel.text = ticket.dateFrom.serverDateTimeTo(format: "dd/MM HH:mm")
+        dateToLabel.text = ticket.dateTo.serverDateTimeTo(format: "dd/MM HH:mm")
         id = ticket.id
         if ticket.priceBookInt > CONFIG_DATA.LIMIT_PRICE_CHANGE_TIME_AUCTION {
             timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-5*3600))

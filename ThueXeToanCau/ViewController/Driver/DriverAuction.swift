@@ -22,8 +22,13 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
     @IBOutlet var backButton: UIButton!
     @IBOutlet var menuButton: UIButton!
-    
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var moneyLabel: UILabel!
+    @IBOutlet var moneyView: UIView!
+    @IBOutlet var changeStatusButton: UIButton!
+    @IBOutlet var bookingThuaKhachButton: UIButton!
+    @IBOutlet var bookingFindPassengerButton: UIButton!
+    @IBOutlet var footerView: UIView!
 
     var tickets = [PassengerTicket]()
     var currentLocation: CLLocationCoordinate2D?
@@ -31,9 +36,11 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     let disposeBag = DisposeBag()
     var canAuction: Bool?
     var menuDropDown = DropDown()
-
-    @IBOutlet var moneyLabel: UILabel!
-    @IBOutlet var moneyView: UIView!
+    var isBusy: Bool? = false
+    var lastContentOffsetY: CGFloat = 0
+    var timerPostDriverGPS: Timer?
+//    var lastCoordinate: CLLocationCoordinate2D?
+    var driverStatus = DRIVER_STATUS.ONLINE
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +60,8 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
         let _ = tableView.es_addPullToRefresh { [weak self] in
             let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f", (self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f", (self?.currentLocation?.latitude)!), "order" : "1", "car_hire_type" : "Một chiều,Khứ hồi,Sân bay"]
-            Alamofire.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
+
+            AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
                 if let ticketResponse = JSON(response.result.value!).array {
 //                    print(ticketResponse)
                     for ticket in ticketResponse {
@@ -62,8 +70,10 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     }
                     self?.tableView.reloadData()
                     self?.tableView.es_stopPullToRefresh()
+
                 }
                 })
+            self?.getMoneyDriver()
         }
 
         currentLocation = CLLocationCoordinate2D.init()
@@ -80,26 +90,33 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         }).start()
 
         menuDropDown.anchorView = menuButton
-        menuDropDown.dataSource = ["Đăng chuyến chiều về, đi chung", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng"/*, "Sửa thông tin"*/]
+        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng", "Sửa thông tin"]
         menuDropDown.bottomOffset = CGPoint(x: menuButton.bounds.width-menuDropDown.bounds.width, y: menuButton.bounds.height)
         menuDropDown.selectionBackgroundColor = UIColor.yellow
         menuDropDown.selectionAction = { [unowned self] (index, item) in
             switch index {
             case 0:
                 let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "driverBookingStoryboardId")
+                let vc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_BOOKING)
                 self.present(vc, animated: true, completion: nil)
-            case 2:
-                self.performSegue(withIdentifier: "auctionToDriverBookingsSegueId", sender: self)
             case 1:
                 print(item)
                 self.performSegue(withIdentifier: "auctionToSuccessSegueId", sender: self)
+            case 2:
+                self.performSegue(withIdentifier: "auctionToDriverBookingsSegueId", sender: self)
+            case 3:
+                let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+                let vc: DriverRegister = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_REGISTER) as! DriverRegister
+                vc.isEditing = true
+                self.present(vc, animated: true, completion: nil)
             default:
                 print(item)
             }
         }
-        getMoneyDriver()
-//        moneyLabel.text = "\(STATIC_DATA.DRIVER_INFO[DRIVER_INFO.TOTAL_MONEY]!)".customNumberStyle() + " đồng"
+
+        self.updateLocationPostDriverGPS()
+        timerPostDriverGPS = Timer.scheduledTimer(timeInterval: CONFIG_DATA.TIME_SCHEDULE_POST_DRIVER_LOCATION, target: self, selector: #selector(updateLocationPostDriverGPS), userInfo: nil, repeats: true)
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -199,7 +216,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
     }
     func auction(bookingId: String, priceAuction: String, type: String) {
-        Alamofire.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             switch response.result.value! {
                 case "1":
                     print("thành công")
@@ -213,25 +230,87 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     SwiftMessages.show(title: "Lỗi mạng", message: "", layout: .MessageViewIOS8, theme: .error)
             default:
                 break
-
             }
         })
     }
 
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.tableView {
-            if scrollView.contentOffset.y > scrollView.contentSize.height - 3*self.tableView.rowHeight {
-                moneyView.isHidden = true
+
+            if (lastContentOffsetY > scrollView.contentOffset.y && scrollView.contentOffset.y < scrollView.contentSize.height - SCREEN_HEIGHT) || scrollView.contentOffset.y <= 0{
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-88, width: SCREEN_WIDTH, height: 88)
+                })
             }
             else {
-                moneyView.isHidden = false
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 0)
+                })
             }
+            lastContentOffsetY = scrollView.contentOffset.y
         }
     }
+
     func getMoneyDriver() {
-        Alamofire.request(URL_APP_API.GET_MONEY_DRIVER, method: HTTPMethod.post, parameters: ["id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {response in
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_MONEY_DRIVER, method: HTTPMethod.post, parameters: ["id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {response in
             self.moneyLabel.text = response.result.value!.customNumberStyle() + " đồng"
+        })
+    }
+    @IBAction func changeStatusButtonTouched(_ sender: Any) {
+
+        if isBusy == true {
+            isBusy = !isBusy!
+            driverStatus = DRIVER_STATUS.ONLINE
+            self.updateLocationPostDriverGPS()
+            timerPostDriverGPS = Timer.scheduledTimer(timeInterval: CONFIG_DATA.TIME_SCHEDULE_POST_DRIVER_LOCATION, target: self, selector: #selector(updateLocationPostDriverGPS), userInfo: nil, repeats: true)
+            changeStatusButton.setTitle("Chờ khách", for: UIControlState.normal)
+            changeStatusButton.layer.backgroundColor = UIColor.init(red: 22.0/255, green: 189.0/255, blue: 12.0/255, alpha: 1.0).cgColor
+        }
+        else {
+            isBusy = !isBusy!
+            driverStatus = DRIVER_STATUS.OFFLINE
+            self.updateLocationPostDriverGPS()
+            timerPostDriverGPS?.invalidate()
+            timerPostDriverGPS = nil
+            changeStatusButton.setTitle("Bận", for: UIControlState.normal)
+            changeStatusButton.layer.backgroundColor = UIColor.init(red: 254.0/255, green: 3.0/255, blue: 5.0/255, alpha: 1.0).cgColor
+        }
+
+}
+
+    @IBAction func bookingThuaKhachButtonTouched(_ sender: Any) {
+        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc: PassengerLogin = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.PASSENGER_LOGIN) as! PassengerLogin
+        vc.isDriver = true
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    @IBAction func bookingFindPassengerButtonTouched(_ sender: Any) {
+        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_BOOKING)
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    @IBAction func unwinToDriverGetBooking(segue: UIStoryboardSegue) {}
+
+    func updateLocationPostDriverGPS() {
+        Location.getLocation(withAccuracy: .navigation, frequency: .oneShot,  onSuccess: { (location) in
+            self.postDrive(coordinate: location.coordinate)
+        }, onError: { error in
+            Location.getLocation(withAccuracy: .ipScan, frequency: .oneShot, timeout: 30, onSuccess: { ipLocation in
+                self.postDrive(coordinate: ipLocation.coordinate)
+            }, onError: {
+                error in
+                print(error)
+            }).start()
+        }).start()
+    }
+
+    func postDrive(coordinate: CLLocationCoordinate2D) {
+        let params = ["car_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "status" : driverStatus, "lon" : String.init(format: "%.6f", (coordinate.longitude)), "lat" : String.init(format: "%.6f", (coordinate.latitude))]
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.POST_DRIVER_COORDINATE, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {
+            response in
+//            print(response.result.value!)
         })
     }
 }

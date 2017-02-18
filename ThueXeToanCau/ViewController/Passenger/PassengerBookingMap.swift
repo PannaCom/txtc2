@@ -31,7 +31,6 @@ class PassengerBookingMap: UIViewController {
         fromMaker = GMSMarker.init(position: GOOGLE_API.DEFAULT_COORDINATE)
         toMaker = GMSMarker.init(position: GOOGLE_API.DEFAULT_COORDINATE)
 
-
         NotificationCenter.default.addObserver(self, selector: #selector(updateCoordinate), name: NSNotification.Name(NOTIFICATION_STRING.BOOKING_UPDATE_COORDINATE), object: nil)
     }
 
@@ -46,7 +45,7 @@ class PassengerBookingMap: UIViewController {
 
         }
         if (fromCoordinate?.notEqual(GOOGLE_API.DEFAULT_COORDINATE))! && (toCoordinate?.notEqual(GOOGLE_API.DEFAULT_COORDINATE))! {
-            Alamofire.request(GOOGLE_API.URL_GET_DERECTION + "?origin=\((fromCoordinate?.latitude)!),\((fromCoordinate?.longitude)!)&destination=\((toCoordinate?.latitude)!),\((toCoordinate?.longitude)!)&sensor=true" , method: HTTPMethod.post, parameters: [:], encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+            AlamofireManager.sharedInstance.manager.request(GOOGLE_API.URL_GET_DERECTION + "?origin=\((fromCoordinate?.latitude)!),\((fromCoordinate?.longitude)!)&destination=\((toCoordinate?.latitude)!),\((toCoordinate?.longitude)!)&sensor=true" , method: HTTPMethod.post, parameters: [:], encoding: JSONEncoding.default, headers: nil).responseJSON { response in
                 if response.result.isSuccess {
                     let json = JSON(response.result.value!)
                     if json["status"] == "OK" {

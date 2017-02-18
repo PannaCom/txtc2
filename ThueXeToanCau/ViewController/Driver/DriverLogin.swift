@@ -64,7 +64,7 @@ class DriverLogin: UIViewController {
                 KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang đăng nhập")
                 self.view.endEditing(true)
 
-                Alamofire.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : self.phoneTextField.text!, "pass" : self.passTextFiled.text!], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : self.phoneTextField.text!, "pass" : self.passTextFiled.text!], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
                     KRProgressHUD.dismiss()
                     if response.result.isSuccess {
                         let values:Array = JSON(response.result.value!).arrayObject!
@@ -82,10 +82,8 @@ class DriverLogin: UIViewController {
                         else {
                             SwiftMessages.show(title:"Không thể đăng nhập", message: "Kiểm tra lại thông tin đăng nhập", layout: .MessageViewIOS8, theme: .error)
                         }
-
                     }
                 })
-
             })
             .addDisposableTo(disposeBag)
     }

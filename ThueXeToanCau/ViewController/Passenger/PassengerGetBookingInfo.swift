@@ -16,9 +16,10 @@ import SCLAlertView
 import KRProgressHUD
 import SwiftLocation
 
-class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableViewDataSource, PassengerTicketDelegate {
+class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableViewDataSource, PassengerTicketDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var filterButton: UIButton!
 
     var tickets = [PassengerTicket]()
     var currentLocation: CLLocationCoordinate2D?
@@ -26,6 +27,9 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
     var name: String?
     var phone: String?
     var firstLoading: Bool = true
+    var searchFromString: String?
+    var searchToString: String?
+    var lastContentOffsetY: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +43,17 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
 
         tableView.expriedTimeInterval = 10.0
 
-        let _ = tableView.es_addPullToRefresh() { [weak self] in
-            let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f",(self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f",(self?.currentLocation?.latitude)!),"car_hire_type" : "Chiều về,Đi chung", "order" : "1"]
+        searchFromString = ""
+        searchToString = ""
 
-            Alamofire.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+        let _ = tableView.es_addPullToRefresh() { [weak self] in
+            let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f",(self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f",(self?.currentLocation?.latitude)!),"car_hire_type" : "Chiều về,Đi chung", "order" : "1", "car_from" : self!.searchFromString!, "car_to" : self!.searchToString!]
+
+//            print(params)
+            AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
 
                 if let ticketsResponse = JSON(response.result.value!).array {
-                    print(ticketsResponse)
+//                    print(ticketsResponse)
                     for ticket in ticketsResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
                         self?.tickets.append(ticket)
@@ -54,11 +62,8 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
                     self?.tableView.es_stopPullToRefresh()
                 }
             }
-
         }
-
         currentLocation = CLLocationCoordinate2D.init()
-
         Location.getLocation(withAccuracy: .city, onSuccess: {foundLocation in
             self.updateLocation(coordinate: foundLocation.coordinate)
         }, onError: { error in
@@ -69,7 +74,6 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
                 print(error)
             }).start()
         }).start()
-
     }
 
     func updateLocation(coordinate: CLLocationCoordinate2D) {
@@ -105,7 +109,7 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
     func passengerBooking(bookingId: String) {
         KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, font: nil, message: "Đang đặt vé")
 
-        Alamofire.request(URL_APP_API.BOOKING_LOG, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "name" : self.name!, "phone" : self.phone!], encoding: JSONEncoding.default, headers: nil).responseString { response in
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_LOG, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "name" : self.name!, "phone" : self.phone!], encoding: JSONEncoding.default, headers: nil).responseString { response in
 
             if response.result.isSuccess && response.result.value == "1"{
                 KRProgressHUD.showSuccess(progressHUDStyle: .whiteColor, maskType: .white, message: "Xong")
@@ -116,4 +120,53 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
 
         }
     }
+    @IBAction func filterButtonTouched(_ sender: Any) {
+
+        let appearance = SCLAlertView.SCLAppearance(
+            kTextFieldHeight: 50,
+            kButtonHeight: 50,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 17)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 17)!,
+            showCloseButton: false
+        )
+        let alert = SCLAlertView(appearance: appearance)
+        let carFrom = alert.addTextField("Điểm đi")
+        let carTo = alert.addTextField("Điểm đến")
+
+        carFrom.clearButtonMode = UITextFieldViewMode.whileEditing
+        carTo.clearButtonMode = UITextFieldViewMode.whileEditing
+        carFrom.text = self.searchFromString
+        carTo.text = self.searchToString
+
+        _ = alert.addButton("Tìm kiếm") {
+            alert.hideView()
+            self.searchFromString = carFrom.text
+            self.searchToString = carTo.text
+            self.tableView.es_startPullToRefresh()
+        }
+        _ = alert.addButton("Huỷ") {
+            alert.hideView()
+        }
+        alert.showEdit("Tìm kiếm", subTitle: "Nhập địa điểm bạn muốn tìm")
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.tableView {
+
+            if (lastContentOffsetY > scrollView.contentOffset.y && scrollView.contentOffset.y < scrollView.contentSize.height - 2*tableView.rowHeight) || scrollView.contentOffset.y <= 0{
+                UIView.animate(withDuration: 0.3, animations: {
+
+                    self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 0)
+                })
+            }
+            else {
+                UIView.animate(withDuration: 0.3, animations: {
+                self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-44, width: SCREEN_WIDTH, height: 44)
+                })
+
+            }
+            lastContentOffsetY = scrollView.contentOffset.y
+        }
+    }
+
 }

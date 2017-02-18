@@ -28,4 +28,6 @@ target 'ThueXeToanCau' do
     pod 'CountdownLabel'
     pod 'SwiftLocation'
     pod 'SwiftMessages'
+    pod 'Siren'
+
 end

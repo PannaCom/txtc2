@@ -13,29 +13,32 @@ import GooglePlaces
 // API
 let HOSTNAME = "http://thuexetoancau.vn/"
 struct URL_APP_API {
-   static let GET_CAR_HIRE_TYPE = HOSTNAME + "api/getCarHireType"
-   static let GET_CAR_SIZE = HOSTNAME + "api/getCarSize"
-   static let GET_CAR_TYPE = HOSTNAME + "api/getListCarType"
-   static let GET_CAR_MADE = HOSTNAME + "api/getCarMadeList"
-   static let GET_CAR_MODEL = HOSTNAME + "api/getCarModelListFromMade"
-   static let GET_WHO_HIRE = HOSTNAME + "api/getCarWhoHire"
+    static let GET_CAR_HIRE_TYPE = HOSTNAME + "api/getCarHireType"
+    static let GET_CAR_SIZE = HOSTNAME + "api/getCarSize"
+    static let GET_CAR_TYPE = HOSTNAME + "api/getListCarType"
+    static let GET_CAR_MADE = HOSTNAME + "api/getCarMadeList"
+    static let GET_CAR_MODEL = HOSTNAME + "api/getCarModelListFromMade"
+    static let GET_WHO_HIRE = HOSTNAME + "api/getCarWhoHire"
 
-   static let BOOKING_TICKET  = HOSTNAME + "api/booking"
-   static let GET__BOOKING = HOSTNAME + "api/getBooking"
-   static let BOOKING_FINAL = HOSTNAME + "api/bookingFinal"
+    static let BOOKING_TICKET  = HOSTNAME + "api/booking"
+    static let GET__BOOKING = HOSTNAME + "api/getBooking"
+    static let BOOKING_FINAL = HOSTNAME + "api/bookingFinal"
     static let GET_BOOKING_SUCCESS = HOSTNAME + "api/getBookingSuccess"
-   static let REGISTER_DRIVER = HOSTNAME + "api/driverRegister"
-   static let GET_AIRPORT = HOSTNAME + "api/getAirportName"
-   static let GET_LONLAT_AIRPORT  = HOSTNAME + "api/getLonLatAirport"
-   static let LOGIN = HOSTNAME + "api/login"
-   static let GET_NOTICE  = HOSTNAME + "api/getNotice"
-   static let BOOKING_LOG = HOSTNAME + "api/bookingLog"
-   static let GET_BOOKING_LOG = HOSTNAME + "api/getBookingLog"
-   static let GET_BOOKING_CUSTOMER = HOSTNAME + "api/getBookingForCustomer"
-   static let GET_LIST_BOOKING_LOG = HOSTNAME + "api/getlistbookinglog"
-   static let GET_DRIVER_BY_ID = HOSTNAME + "api/getDriverById"
-   static let GET_MONEY_DRIVER = HOSTNAME + "api/getMoneyDriver"
-   static let WHO_WIN_DRIVER = HOSTNAME + "api/whoWin"
+    static let REGISTER_DRIVER = HOSTNAME + "api/driverRegister"
+    static let GET_AIRPORT = HOSTNAME + "api/getAirportName"
+    static let GET_LONLAT_AIRPORT  = HOSTNAME + "api/getLonLatAirport"
+    static let LOGIN = HOSTNAME + "api/login"
+    static let GET_NOTICE  = HOSTNAME + "api/getNotice"
+    static let BOOKING_LOG = HOSTNAME + "api/bookingLog"
+    static let GET_BOOKING_LOG = HOSTNAME + "api/getBookingLog"
+    static let GET_BOOKING_CUSTOMER = HOSTNAME + "api/getBookingForCustomer"
+    static let GET_LIST_BOOKING_LOG = HOSTNAME + "api/getlistbookinglog"
+    static let GET_DRIVER_BY_ID = HOSTNAME + "api/getDriverById"
+    static let GET_MONEY_DRIVER = HOSTNAME + "api/getMoneyDriver"
+    static let WHO_WIN_DRIVER = HOSTNAME + "api/whoWin"
+    static let CONFIRM_DRIVER = HOSTNAME + "api/confirm"
+    static let POST_DRIVER_COORDINATE = HOSTNAME + "api/postDriverGPS"
+    static let PASSENGER_GET_AROUND = HOSTNAME + "api/getAround"
 }
 
 
@@ -78,17 +81,22 @@ struct USER_ROLE{
 struct SEGUE_ID {
     static let PASSENGER_SELECT_ACTIVITY = "passengerSelectActivitySegueId"
     static let LOGIN_TO_AUCTION = "driverLoginToAuctionSegueId"
+    static let SHOW_LOG_AUCTION_SUCCESS = "driverLogAuctionSuccess"
+    static let SHOW_LOG_BOOKING = "driverLogBooking"
 }
 
 struct STORYBOARD_ID {
     static let PASSENGER_SELECT_ACTIVITY = "passengerSelectActivityStoryboardId"
-    static let DRIVER_AUCTION = "driverAuctionStoryboardId"
-
+    static let PASSENGER_LOGIN = "passengerLoginStoryboardId"
+    static let PASSENGER_BOOKING = "passengerBookingStoryboardId"
     static let PASSENGER_BOOKING_INFO = "passengerBookingInfoStoryboardId"
     static let PASSENGER_BOOKING_MAP = "passengerBookingMapStoryboardId"
     static let PASSENGER_GET_BOOKING_INFO = "passengerGetBookingInfoStoryboardId"
     static let PASSENGER_GET_BOOKING_MAP = "passengerGetBookingMapStoryboardId"
 
+    static let DRIVER_REGISTER = "driverRegisterStoryboardId"
+    static let DRIVER_AUCTION = "driverAuctionStoryboardId"
+    static let DRIVER_BOOKING = "driverBookingStoryboardId"
     static let DRIVER_BOOKING_INFO = "driverBookingInfoStoryboardId"
     static let DRIVER_BOOKING_MAP = "driverBookingMapStoryboardId"
     static let DRIVER_GET_BOOKING_INFO = "driverGetBookingInfoStoryboardId"
@@ -127,6 +135,9 @@ struct STYLE_FORMAT {
 let components = Calendar.current.dateComponents([.year], from: Date())
 let CURRENT_YEAR = components.year
 
+let SCREEN_WIDTH = UIScreen.main.bounds.width
+let SCREEN_HEIGHT = UIScreen.main.bounds.height
+
 struct STATIC_DATA {
     static var CAR_HIRE_TYPE: NSArray = []
     static var CAR_SIZE: NSArray = []
@@ -141,12 +152,19 @@ struct STATIC_DATA {
     static var DRIVER_INFO: Dictionary<String, Any?> = [:]
 }
 
+struct DRIVER_STATUS {
+    static var ONLINE = "0"
+    static var OFFLINE = "1"
+}
+
 struct NOTIFICATION_STRING {
     static let PASSENGER_BOOKING_DONE = "notificationPassengerBookingDone"
     static let BOOKING_UPDATE_COORDINATE = "notificationBookingUpdateCoordinate"
+    static let DRIVER_BOOKING_DONE = "notificationDriverBookingDone"
 }
 
 struct CONFIG_DATA {
     static let PASSWORD_MIN_LENGTH = 4
     static let LIMIT_PRICE_CHANGE_TIME_AUCTION = 1000000
+    static let TIME_SCHEDULE_POST_DRIVER_LOCATION = TimeInterval(300) //5 minutes = 5*60 seconds
 }

@@ -55,9 +55,9 @@ class PassengerTicketCell: UITableViewCell {
                 carSizeLabel.text = passengerTicket.carSize + " chỗ"
             }
         }
-        priceLabel.text = passengerTicket.priceCurrent.customNumberStyle() + " đ"
-        dateFromLabel.text = passengerTicket.dateFrom.serverDateTimeToFormatddMMhhmm()
-        dateToLabel.text = passengerTicket.dateTo.serverDateTimeToFormatddMMhhmm()
+        priceLabel.text = passengerTicket.priceMax.customNumberStyle() + " đ"
+        dateFromLabel.text = passengerTicket.dateFrom.serverDateTimeTo(format: "dd/MM HH:mm")
+        dateToLabel.text = passengerTicket.dateTo.serverDateTimeTo(format: "dd/MM HH:mm")
         id = passengerTicket.id
     }
 

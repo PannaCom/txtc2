@@ -84,12 +84,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/Modules/CustomExtension.swift"
-            timestampString = "504766661.731817"
+            timestampString = "505075091.076891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "serverDateTimeToFormatddMMhhmm()"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "serverDateTimeTo(format:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,24 +105,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "textFieldShouldBeginEditing(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ThueXeToanCau/ViewController/Driver/DriverRegister.swift"
-            timestampString = "504783649.406898"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            landmarkName = "DriverRegister"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -148,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverLogin.swift"
-            timestampString = "504852904.197289"
+            timestampString = "505649449.810294"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -180,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-            timestampString = "504973530.742034"
+            timestampString = "505630425.985553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "auctionButtonTouched(bookingId:priceBuy:priceMax:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -196,12 +180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-            timestampString = "504973530.742034"
+            timestampString = "505630425.985553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -212,12 +196,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-            timestampString = "504973530.742034"
+            timestampString = "505630425.985553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "auction(bookingId:priceAuction:type:)"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
+            landmarkName = "buyNowButtonTouched(bookingId:priceBuy:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -228,12 +212,12 @@
                   moduleName = "ThueXeToanCau"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vmio69/Desktop/AnhHT/Swift/txtc2/ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-                  timestampString = "504974188.908473"
+                  timestampString = "505649451.286212"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "202"
-                  endingLineNumber = "202"
-                  offsetFromSymbolStart = "138">
+                  startingLineNumber = "214"
+                  endingLineNumber = "214"
+                  offsetFromSymbolStart = "72">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -243,12 +227,12 @@
                   moduleName = "ThueXeToanCau"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vmio69/Desktop/AnhHT/Swift/txtc2/ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-                  timestampString = "504974188.912129"
+                  timestampString = "505649451.288272"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203"
-                  offsetFromSymbolStart = "210">
+                  startingLineNumber = "215"
+                  endingLineNumber = "215"
+                  offsetFromSymbolStart = "165">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -260,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-            timestampString = "504934096.126335"
+            timestampString = "505628821.228994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -290,11 +274,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverBookingInfo.swift"
-            timestampString = "504972380.49689"
+            timestampString = "505067306.321158"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -306,11 +290,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ThueXeToanCau/ViewController/Driver/DriverBookingInfo.swift"
-            timestampString = "504972380.49689"
+            timestampString = "505069629.142791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -321,13 +305,77 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ThueXeToanCau/ViewController/Driver/DriverAuction.swift"
-            timestampString = "504973670.035339"
+            filePath = "ThueXeToanCau/ViewController/Driver/DriverLogPassengerBooking.swift"
+            timestampString = "505072249.391306"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ThueXeToanCau/ViewController/Driver/DriverLogPassengerBooking.swift"
+            timestampString = "505072324.765408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThueXeToanCau.DriverLogPassengerBooking.(viewDidLoad () -&gt; ()).(closure #2)"
+                  moduleName = "ThueXeToanCau"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vmio69/Desktop/AnhHT/Swift/txtc2/ThueXeToanCau/ViewController/Driver/DriverLogPassengerBooking.swift"
+                  timestampString = "505649451.30207"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "361">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ThueXeToanCau.DriverLogPassengerBooking.(viewDidLoad () -&gt; ()).(closure #2).(closure #1)"
+                  moduleName = "ThueXeToanCau"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/vmio69/Desktop/AnhHT/Swift/txtc2/ThueXeToanCau/ViewController/Driver/DriverLogPassengerBooking.swift"
+                  timestampString = "505649451.305463"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ThueXeToanCau/View/LogPassengerCell.swift"
+            timestampString = "505075129.304519"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "callButtonTouched(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

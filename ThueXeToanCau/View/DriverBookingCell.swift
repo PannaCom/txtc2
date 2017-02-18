@@ -2,7 +2,7 @@
 //  DriverBookingCell.swift
 //  ThueXeToanCau
 //
-//  Created by VMio69 on 1/1/17.
+//  Created by AnhHT on 1/1/17.
 //  Copyright © 2017 AnhHT. All rights reserved.
 //
 
@@ -51,8 +51,8 @@ class DriverBookingCell: UITableViewCell {
             }
         }
         
-        dateFromLabel.text = ticket.dateFrom.serverDateTimeToFormatddMMhhmm()
-        dateToLabel.text = ticket.dateTo.serverDateTimeToFormatddMMhhmm()
+        dateFromLabel.text = ticket.dateFrom.serverDateTimeTo(format: "dd/MM HH:mm")
+        dateToLabel.text = ticket.dateTo.serverDateTimeTo(format: "dd/MM HH:mm")
         id = ticket.id
         idLabel.text = "#" + id!
         whoHireLabel.text = ticket.whoHire
