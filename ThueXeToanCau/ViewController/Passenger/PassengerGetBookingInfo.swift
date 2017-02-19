@@ -30,7 +30,7 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
     var searchFromString: String?
     var searchToString: String?
     var lastContentOffsetY: CGFloat = 0
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,13 +49,12 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
         let _ = tableView.es_addPullToRefresh() { [weak self] in
             let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f",(self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f",(self?.currentLocation?.latitude)!),"car_hire_type" : "Chiều về,Đi chung", "order" : "1", "car_from" : self!.searchFromString!, "car_to" : self!.searchToString!]
 
-//            print(params)
             AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
 
                 if let ticketsResponse = JSON(response.result.value!).array {
-//                    print(ticketsResponse)
+                    self?.tickets.removeAll()
                     for ticket in ticketsResponse {
-                        let ticket = PassengerTicket.init(withJSON: ticket)
+                        let ticket = PassengerTicket(withJSON: ticket)
                         self?.tickets.append(ticket)
                     }
                     self?.tableView.reloadData()
@@ -90,7 +89,6 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         if let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID.PASSSENGER_TICKET, for: indexPath) as? PassengerTicketCell {
             cell.updateUI(passengerTicket: tickets[indexPath.row])
             cell.delegate = self
@@ -120,6 +118,7 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
 
         }
     }
+    
     @IBAction func filterButtonTouched(_ sender: Any) {
 
         let appearance = SCLAlertView.SCLAppearance(
@@ -150,22 +149,23 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
         alert.showEdit("Tìm kiếm", subTitle: "Nhập địa điểm bạn muốn tìm")
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.tableView {
-
-            if (lastContentOffsetY > scrollView.contentOffset.y && scrollView.contentOffset.y < scrollView.contentSize.height - 2*tableView.rowHeight) || scrollView.contentOffset.y <= 0{
-                UIView.animate(withDuration: 0.3, animations: {
-
-                    self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 0)
-                })
-            }
-            else {
-                UIView.animate(withDuration: 0.3, animations: {
-                self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-44, width: SCREEN_WIDTH, height: 44)
-                })
-
-            }
-            lastContentOffsetY = scrollView.contentOffset.y
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        lastContentOffsetY = scrollView.contentOffset.y
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        if lastContentOffsetY < scrollView.contentOffset.y {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-114, width: SCREEN_WIDTH, height: 0)
+            }, completion: { complete in
+                self.filterButton.isHidden = true
+            })
+        }
+        else {
+            self.filterButton.isHidden = false
+            UIView.animate(withDuration: 0.3, animations: {
+                self.filterButton.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-158, width: SCREEN_WIDTH, height: 44)
+            })
         }
     }
 

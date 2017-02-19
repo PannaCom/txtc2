@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Yalantis
+Copyright (c) 2017 Yalantis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -152,15 +152,15 @@ SOFTWARE.
 
 ## GoogleMaps
 
-Copyright 2016 Google
+Copyright 2017 Google
 
 ## GooglePlacePicker
 
-Copyright 2016 Google
+Copyright 2017 Google
 
 ## GooglePlaces
 
-Copyright 2016 Google
+Copyright 2017 Google
 
 ## KRProgressHUD
 

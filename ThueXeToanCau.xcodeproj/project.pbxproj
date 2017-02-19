@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F836D1B1E589B230005460A /* testGPS.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0F836D1A1E589B230005460A /* testGPS.gpx */; };
 		3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62C4111E1F81380059E673 /* DPDraggableButton.swift */; };
 		3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */; };
 		3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThueXeToanCau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F836D1A1E589B230005460A /* testGPS.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = testGPS.gpx; sourceTree = SOURCE_ROOT; };
 		3E62C4111E1F81380059E673 /* DPDraggableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDraggableButton.swift; sourceTree = "<group>"; };
 		3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverAuctionCell.swift; sourceTree = "<group>"; };
 		3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrivierAuctionSuccess.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 		3E9DD42A1E051F1500F76820 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				0F836D1A1E589B230005460A /* testGPS.gpx */,
 				3EC801D21E1CD46300EA7F29 /* txtcCer.der */,
 				3EC801CC1E1BA92400EA7F29 /* txtcCer.cer */,
 				3EA9F1081E050487001FE8EA /* Assets.xcassets */,
@@ -376,6 +379,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F836D1B1E589B230005460A /* testGPS.gpx in Resources */,
 				3EC801D31E1CD46300EA7F29 /* txtcCer.der in Resources */,
 				3EC801CD1E1BA92400EA7F29 /* txtcCer.cer in Resources */,
 				3EA9F10C1E050487001FE8EA /* LaunchScreen.storyboard in Resources */,

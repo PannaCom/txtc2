@@ -39,7 +39,6 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     var isBusy: Bool? = false
     var lastContentOffsetY: CGFloat = 0
     var timerPostDriverGPS: Timer?
-//    var lastCoordinate: CLLocationCoordinate2D?
     var driverStatus = DRIVER_STATUS.ONLINE
 
     override func viewDidLoad() {
@@ -63,14 +62,12 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
             AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
                 if let ticketResponse = JSON(response.result.value!).array {
-//                    print(ticketResponse)
                     for ticket in ticketResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
                         self?.tickets.append(ticket)
                     }
                     self?.tableView.reloadData()
                     self?.tableView.es_stopPullToRefresh()
-
                 }
                 })
             self?.getMoneyDriver()
@@ -90,7 +87,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         }).start()
 
         menuDropDown.anchorView = menuButton
-        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng", "Sửa thông tin"]
+        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng"/*, "Sửa thông tin"*/]
         menuDropDown.bottomOffset = CGPoint(x: menuButton.bounds.width-menuDropDown.bounds.width, y: menuButton.bounds.height)
         menuDropDown.selectionBackgroundColor = UIColor.yellow
         menuDropDown.selectionAction = { [unowned self] (index, item) in
@@ -145,7 +142,6 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         else {
             return UITableViewCell()
         }
-
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,12 +174,10 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     alert.dismiss(animated: true, completion: nil)
                 })
                 alert.showEdit("Đấu giá", subTitle: "Khoảng giá: \(priceBuy.customNumberStyle()) đ - \(priceMax.customNumberStyle()) đ")
-
             }
             else {
                 SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
             }
-
         }
 
     }
@@ -215,6 +209,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
         }
     }
+    
     func auction(bookingId: String, priceAuction: String, type: String) {
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             switch response.result.value! {

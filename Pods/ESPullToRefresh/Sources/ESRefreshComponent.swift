@@ -56,7 +56,8 @@ open class ESRefreshComponent: UIView {
     
     /// @param tag observing
     fileprivate var isObservingScrollView = false
-    
+    fileprivate var isIgnoreObserving = false
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleRightMargin]
@@ -123,6 +124,13 @@ extension ESRefreshComponent /* KVO methods */ {
     fileprivate static let offsetKeyPath = "contentOffset"
     fileprivate static let contentSizeKeyPath = "contentSize"
     
+    public func ignoreObserver(_ ignore: Bool = false) {
+        if let scrollView = scrollView {
+            scrollView.isScrollEnabled = !ignore
+        }
+        isIgnoreObserving = ignore
+    }
+    
     fileprivate func addObserver(_ view: UIView?) {
         if let scrollView = view as? UIScrollView, !isObservingScrollView {
             scrollView.addObserver(self, forKeyPath: ESRefreshComponent.offsetKeyPath, options: [.initial, .new], context: &ESRefreshComponent.context)
@@ -145,12 +153,16 @@ extension ESRefreshComponent /* KVO methods */ {
                 return
             }
             if keyPath == ESRefreshComponent.contentSizeKeyPath {
-                sizeChangeAction(object: object as AnyObject?, change: change)
+                if isIgnoreObserving == false {
+                    sizeChangeAction(object: object as AnyObject?, change: change)
+                }
             } else if keyPath == ESRefreshComponent.offsetKeyPath {
-                offsetChangeAction(object: object as AnyObject?, change: change)
+                if isIgnoreObserving == false {
+                    offsetChangeAction(object: object as AnyObject?, change: change)
+                }
             }
         } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+
         }
     }
     
@@ -165,6 +177,7 @@ public extension ESRefreshComponent /* Action */ {
         
         _isRefreshing = !isAuto
         _isAutoRefreshing = isAuto
+        
         self.start()
     }
     
@@ -174,8 +187,6 @@ public extension ESRefreshComponent /* Action */ {
         }
         
         self.stop()
-        _isRefreshing = false
-        _isAutoRefreshing = false
     }
 
     public func start() {
@@ -183,7 +194,8 @@ public extension ESRefreshComponent /* Action */ {
     }
     
     public func stop() {
-    
+        _isRefreshing = false
+        _isAutoRefreshing = false
     }
     
     //  ScrollView contentSize change action

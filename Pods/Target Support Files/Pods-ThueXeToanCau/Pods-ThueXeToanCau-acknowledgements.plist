@@ -45,7 +45,7 @@ THE SOFTWARE.
 			<key>FooterText</key>
 			<string>The MIT License (MIT)
 
-Copyright (c) 2015 Yalantis
+Copyright (c) 2017 Yalantis
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -199,7 +199,7 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2016 Google</string>
+			<string>Copyright 2017 Google</string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>
@@ -209,7 +209,7 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2016 Google</string>
+			<string>Copyright 2017 Google</string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>
@@ -219,7 +219,7 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright 2016 Google</string>
+			<string>Copyright 2017 Google</string>
 			<key>License</key>
 			<string>Copyright</string>
 			<key>Title</key>

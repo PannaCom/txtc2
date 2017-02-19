@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/vmio69/Desktop/AnhHT/Swift/txtc2/testGPS.gpx">
-   </FileRef>
-   <FileRef
       location = "group:ThueXeToanCau.xcodeproj">
    </FileRef>
    <FileRef

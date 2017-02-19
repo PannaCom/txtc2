@@ -41,8 +41,9 @@ class DriverAuctionSuccess: UIViewController, UITableViewDataSource, UITableView
             let params:Dictionary<String, String> = ["phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE] as! String]
             AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_SUCCESS, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
                 if let ticketResponse = JSON(response.result.value!).array {
+                    self?.tickets.removeAll()
                     for ticket in ticketResponse {
-                        let ticket = PassengerTicket.init(withJSON: ticket)
+                        let ticket = PassengerTicket(withJSON: ticket)
                         self?.tickets.append(ticket)
                     }
                     self?.tableView.reloadData()
