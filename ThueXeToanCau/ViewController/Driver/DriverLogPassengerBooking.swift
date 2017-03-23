@@ -33,6 +33,7 @@ class DriverLogPassengerBooking: UIViewController, UITableViewDelegate, UITableV
                 self?.tableView.es_stopPullToRefresh()
                 if response.result.isSuccess {
                     if let ticketResponse = JSON(response.result.value!).array {
+                        self?.logPassengers.removeAll()
                         for log in ticketResponse {
                             let log = LogPassenger.init(json: log)
                             self?.logPassengers.append(log)

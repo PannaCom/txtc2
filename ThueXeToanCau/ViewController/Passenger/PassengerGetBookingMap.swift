@@ -75,18 +75,16 @@ class PassengerGetBookingMap: UIViewController {
     }
 
     func updateCurrentLocation() {
-        Location.getLocation(withAccuracy: .navigation, onSuccess: {
-            location in
-            self.getAround(coordinate: location.coordinate)
-        }, onError: {
-            error in
-            Location.getLocation(withAccuracy: .ipScan, frequency: .oneShot, timeout: 30, onSuccess: { ipLocation in
-                 self.getAround(coordinate: ipLocation.coordinate)
-            }, onError: {
-                error in
+        Location.getLocation(accuracy: .navigation, frequency: .continuous, success: { foundLocation in
+            self.getAround(coordinate: foundLocation.1.coordinate)
+        }, error: { error in
+            print(error)
+            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
+                self.getAround(coordinate: ipLocation.1.coordinate)
+            }, error: { error in
                 print(error)
-            }).start()
-        }).start()
+            }).resume()
+        }).resume()
     }
 
 }

@@ -56,7 +56,6 @@ class DriverAuctionCell: UITableViewCell {
 
     func updateUI(ticket: PassengerTicket) {
         carHireTypeLabel.text = ticket.hireType
-//        timeCountDownLabel
         carFromLabel.text = ticket.placeFrom
         carToLabel.text = ticket.placeTo
         if ticket.carSize == "4" {

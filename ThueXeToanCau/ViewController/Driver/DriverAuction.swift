@@ -62,6 +62,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
             AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
                 if let ticketResponse = JSON(response.result.value!).array {
+                    self?.tickets.removeAll()
                     for ticket in ticketResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
                         self?.tickets.append(ticket)
@@ -75,16 +76,16 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
         currentLocation = CLLocationCoordinate2D.init()
 
-        Location.getLocation(withAccuracy: .city, onSuccess: {foundLocation in
-            self.updateLocation(coordinate: foundLocation.coordinate)
-        }, onError: { error in
+        Location.getLocation(accuracy: .city, frequency: .continuous, success: { foundLocation in
+            self.updateLocation(coordinate: foundLocation.1.coordinate)
+        }, error: { error in
             print(error)
-            Location.getLocation(withAccuracy: .ipScan, onSuccess: {ipLocation in
-                self.updateLocation(coordinate: ipLocation.coordinate)
-            }, onError: {error in
+            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
+                self.updateLocation(coordinate: ipLocation.1.coordinate)
+            }, error: { error in
                 print(error)
-            }).start()
-        }).start()
+            }).resume()
+        }).resume()
 
         menuDropDown.anchorView = menuButton
         menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng"/*, "Sửa thông tin"*/]
@@ -252,7 +253,6 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         })
     }
     @IBAction func changeStatusButtonTouched(_ sender: Any) {
-
         if isBusy == true {
             isBusy = !isBusy!
             driverStatus = DRIVER_STATUS.ONLINE
@@ -270,8 +270,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             changeStatusButton.setTitle("Bận", for: UIControlState.normal)
             changeStatusButton.layer.backgroundColor = UIColor.init(red: 254.0/255, green: 3.0/255, blue: 5.0/255, alpha: 1.0).cgColor
         }
-
-}
+    }
 
     @IBAction func bookingThuaKhachButtonTouched(_ sender: Any) {
         let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -289,16 +288,16 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     @IBAction func unwinToDriverGetBooking(segue: UIStoryboardSegue) {}
 
     func updateLocationPostDriverGPS() {
-        Location.getLocation(withAccuracy: .navigation, frequency: .oneShot,  onSuccess: { (location) in
-            self.postDrive(coordinate: location.coordinate)
-        }, onError: { error in
-            Location.getLocation(withAccuracy: .ipScan, frequency: .oneShot, timeout: 30, onSuccess: { ipLocation in
-                self.postDrive(coordinate: ipLocation.coordinate)
-            }, onError: {
-                error in
+        Location.getLocation(accuracy: .navigation, frequency: .continuous, success: { foundLocation in
+            self.postDrive(coordinate: foundLocation.1.coordinate)
+        }, error: { error in
+            print(error)
+            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
+                self.postDrive(coordinate: ipLocation.1.coordinate)
+            }, error: { error in
                 print(error)
-            }).start()
-        }).start()
+            }).resume()
+        }).resume()
     }
 
     func postDrive(coordinate: CLLocationCoordinate2D) {

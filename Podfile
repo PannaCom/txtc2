@@ -12,7 +12,6 @@ target 'ThueXeToanCau' do
     pod 'GooglePlacePicker'
     pod 'ESPullToRefresh'
     pod 'KRProgressHUD'
-#    pod 'SlideMenuControllerOC'
     pod 'ColorMatchTabs'
     pod 'TextFieldEffects'
     pod 'RxSwift'

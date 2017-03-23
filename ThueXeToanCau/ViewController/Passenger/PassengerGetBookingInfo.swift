@@ -63,16 +63,17 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
             }
         }
         currentLocation = CLLocationCoordinate2D.init()
-        Location.getLocation(withAccuracy: .city, onSuccess: {foundLocation in
-            self.updateLocation(coordinate: foundLocation.coordinate)
-        }, onError: { error in
+        
+        Location.getLocation(accuracy: .city, frequency: .continuous, success: { foundLocation in
+            self.updateLocation(coordinate: foundLocation.1.coordinate)
+        }, error: { error in
             print(error)
-            Location.getLocation(withAccuracy: .ipScan, onSuccess: {ipLocation in
-                self.updateLocation(coordinate: ipLocation.coordinate)
-            }, onError: {error in
+            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
+                self.updateLocation(coordinate: ipLocation.1.coordinate)
+            }, error: { error in
                 print(error)
-            }).start()
-        }).start()
+            }).resume()
+        }).resume()
     }
 
     func updateLocation(coordinate: CLLocationCoordinate2D) {
