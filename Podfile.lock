@@ -16,6 +16,7 @@ PODS:
   - GooglePlaces (2.2.0):
     - GoogleMaps/Base (= 2.2.0)
   - KRProgressHUD (2.2.0)
+  - M13Checkbox (3.1.3)
   - RxCocoa (3.3.1):
     - RxSwift (~> 3.3)
   - RxSwift (3.3.1)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - GooglePlacePicker
   - GooglePlaces
   - KRProgressHUD
+  - M13Checkbox
   - RxCocoa
   - RxSwift
   - SCLAlertView
@@ -57,6 +59,7 @@ SPEC CHECKSUMS:
   GooglePlacePicker: 345b1aabd42c9d6d9bf2369c1bae1234d903e764
   GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   KRProgressHUD: 77aa376722c2593d8922317fa2c0a5470e79109f
+  M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
   RxCocoa: 7dcb7a1860fc9cd0e23dae67ab105fc2916670b6
   RxSwift: 8fc9f2de6275a9101d518444e00bf32f1a42caac
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
@@ -66,6 +69,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TextFieldEffects: faa47d428ee8eafb781a8413ac4345420d2328c4
 
-PODFILE CHECKSUM: cae846c6860cd84f1c665c03d1709cc8d61f9732
+PODFILE CHECKSUM: 37ca0da3bed94f776ecb6cb704c41e7b77bd91c2
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1.beta.1

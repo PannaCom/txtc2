@@ -88,7 +88,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         }).resume()
 
         menuDropDown.anchorView = menuButton
-        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng"/*, "Sửa thông tin"*/]
+        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng", "Xem sao kê Grab"/*, "Sửa thông tin"*/]
         menuDropDown.bottomOffset = CGPoint(x: menuButton.bounds.width-menuDropDown.bounds.width, y: menuButton.bounds.height)
         menuDropDown.selectionBackgroundColor = UIColor.yellow
         menuDropDown.selectionAction = { [unowned self] (index, item) in
@@ -103,6 +103,8 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             case 2:
                 self.performSegue(withIdentifier: "auctionToDriverBookingsSegueId", sender: self)
             case 3:
+                self.performSegue(withIdentifier: "driveGetTransactionSegueId", sender: self)
+            case 4:
                 let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
                 let vc: DriverRegister = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_REGISTER) as! DriverRegister
                 vc.isEditing = true
