@@ -59,7 +59,7 @@ class SplashViewController: UIViewController {
                     }
                     if userRole == USER_ROLE.DRIVER {
 
-                        AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : userDefault.string(forKey: DRIVER_INFO.PHONE)!, "pass" : userDefault.string(forKey: DRIVER_INFO.PASS)!], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                        AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : userDefault.string(forKey: DRIVER_INFO.PHONE)!, "pass" : userDefault.string(forKey: DRIVER_INFO.PASS)!], encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { response in
 
                             if response.result.isSuccess {
                                 if let values:Array = JSON(response.result.value!).arrayObject {
@@ -153,7 +153,7 @@ class SplashViewController: UIViewController {
                 for airportName in result {
                     group.enter()
 
-                    AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_LONLAT_AIRPORT, method: .post, parameters: ["airport":airportName], encoding: JSONEncoding.default, headers: nil).responseJSON{ response in
+                    AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_LONLAT_AIRPORT, method: .post, parameters: ["airport":airportName], encoding: URLEncoding.default, headers: nil).responseJSON{ response in
                         let r:NSArray = response.result.value as! NSArray
                         let dict = r[0] as! NSDictionary
                     
@@ -216,8 +216,9 @@ class SplashViewController: UIViewController {
     }
 
     func getDataInputFromURL(url: String, completion: @escaping (_ result: NSArray, _ isSuccess: Bool) -> Void) {
+       /*
         var urlRequest = URLRequest(url: URL(string: url)!)
-        urlRequest.httpMethod = "POST"
+        urlRequest.httpMethod = "GET"
         urlRequest.httpBody = try! JSONSerialization.data(withJSONObject: [], options: [])
         urlRequest.setValue("text/html; charset=utf-8", forHTTPHeaderField: "Content-Type")
 
@@ -233,11 +234,25 @@ class SplashViewController: UIViewController {
                 completion ([], false)
             }
         }
+        */
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseJSON(completionHandler: {
+            response in
+            if response.result.isFailure {
+                print("Error Load Data: \(response.result.error)")
+            }
+            if response.result.isSuccess {
+                completion (response.result.value as! NSArray, true)
+            }
+            else {
+                completion ([], false)
+            }
+        })
     }
 
     func getDataInputFromURLwithJSON(url: String, completion: @escaping (_ result: NSArray,_ isSuccess: Bool) -> Void) {
 
-        AlamofireManager.sharedInstance.manager.request(url).responseJSON { response in
+     /*
+            AlamofireManager.sharedInstance.manager.request(url).responseJSON { response in
 
             if response.result.isSuccess {
                 let r:NSArray = response.result.value as! NSArray
@@ -247,6 +262,17 @@ class SplashViewController: UIViewController {
                 completion ([], false)
             }
         }
+ */
+        Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseJSON(completionHandler: {
+            response in
+            if response.result.isSuccess {
+                let r:NSArray = response.result.value as! NSArray
+                completion (r.value(forKey: "name") as! NSArray, true)
+            }
+            else {
+                completion ([], false)
+            }
+        })
     }
 
     func stringFromNumber(number: NSNumber) -> String{

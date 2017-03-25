@@ -20,28 +20,18 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
 
     // MARK: --Properties, variables
     @IBOutlet var mainScroll: UIScrollView!
-
-//    @IBOutlet var nameTextField: UITextField!
-//    @IBOutlet var phoneTextField: UITextField!
-
     @IBOutlet var carHireTypeTextField: UITextField!
     @IBOutlet var placeFromTextField: UITextField!
     @IBOutlet var placeToTextField: UITextField!
-//    @IBOutlet var carTypeTextField: UITextField!
     @IBOutlet var whoHireTextField: UITextField!
     @IBOutlet var dateFromTextField: UITextField!
-//    @IBOutlet var dateToTextField: UITextField!
-
     @IBOutlet var bookingButton: UIButton!
-
-//    @IBOutlet var dateToLabel: UILabel!
 
     var textFieldSelected: UITextField!
     var airportTextField: UITextField!
     var airportHireTypeTextField: UITextField!
 
     let carHireTypeDropdown = DropDown()
-//    let carTypeDropdown = DropDown()
     let whoHireDropdown = DropDown()
     let airportDropdown = DropDown()
     let airportHireTypeDropdown = DropDown()
@@ -75,21 +65,14 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
 
         formatTextFields(textFileds: [carHireTypeTextField, placeFromTextField, placeToTextField, whoHireTextField, dateFromTextField])
 
-//        nameTextField.delegate = self
-//        phoneTextField.delegate = self
         placeFromTextField.delegate = self
         placeToTextField.delegate = self
         dateFromTextField.delegate = self
-//        dateToTextField.delegate = self
         carHireTypeTextField.delegate = self
-//        carTypeTextField.delegate = self
         whoHireTextField.delegate = self
 
         airportTextField = UITextField.init()
         airportHireTypeTextField = UITextField.init()
-
-//        nameTextField.text = STATIC_DATA.DRIVER_INFO[DRIVER_INFO.NAME] as! String?
-//        phoneTextField.text = STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE] as! String?
 
         placeData = []
 
@@ -113,22 +96,15 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
 
         bookingButton.rx.tap
             .subscribe(onNext: {
-
                 if self.checkTextFieldEmpty() {
-
-//                    var carType:String = self.carTypeTextField.text!
-//                    carType = carType.substring(to: (carType.range(of: " ")?.lowerBound)!)
                     var airportName:String = ""
                     var airportWay:String = ""
                     if self.carHireTypeTextField.text! == "Sân bay" {
                         airportName = self.placeFromTextField.text!
                         airportWay = self.placeToTextField.text!
                     }
-
                     var dateTo:String = ""
-
                     dateTo = (self.dateTimeServerFormat?.string(from: self.dateToSampleDatetime as! Date))!
-
 
                     let params:Dictionary<String, String> = ["car_from" : self.placeFromTextField.text!,
                                                              "car_to" : self.placeToTextField.text!,
@@ -163,7 +139,6 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
                         else {
                             SwiftMessages.show(title: "Lỗi", message: "Không thể đăng chuyến", layout: .MessageViewIOS8, theme: .error)
                         }
-
                     }
                 }
                 else {
@@ -171,21 +146,12 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
                 }
             })
             .addDisposableTo(disposeBag)
-
-//        carTypeTextField.text = "\((STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_SIZE])!!) chỗ"
-
     }
 
     func checkTextFieldEmpty() -> Bool {
-//        if (dateToTextField.text?.isEmpty)! {
-//            if self.carHireTypeTextField.text == "Khứ hồi" || self.placeToTextField.text == "Khứ hồi" {
-//                return false
-//            }
-//        }
         return !((carHireTypeTextField.text?.isEmpty)!
             || (placeFromTextField.text?.isEmpty)!
             || (placeToTextField.text?.isEmpty)!
-//            || (carTypeTextField.text?.isEmpty)!
             || (whoHireTextField.text?.isEmpty)!
             || (dateFromTextField.text?.isEmpty)!
         )
@@ -196,10 +162,8 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
         carHireTypeTextField.text = ""
         placeFromTextField.text = ""
         placeToTextField.text = ""
-//        carTypeTextField.text = ""
         whoHireTextField.text = ""
         dateFromTextField.text = ""
-//        dateToTextField.text = ""
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -216,11 +180,6 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
 
             
         }
-
-//        carTypeDropdown.dataSource = STATIC_DATA.CAR_SIZE as! [String]
-//        carTypeDropdown.selectionAction = { [unowned self] (index, item) in
-//            self.carTypeTextField.text = item
-//        }
 
         whoHireDropdown.dataSource = STATIC_DATA.WHO_HIRE as! [String]
         whoHireDropdown.selectionAction = { [unowned self] (index, item) in
@@ -241,7 +200,6 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
                     }
 
                     if let place = place {
-//                        print("Place coordinate \(place.coordinate)")
                         self.placeFromCoordinate = place.coordinate
                         self.fromLonString = String.init(format: "%.6f", self.placeFromCoordinate.longitude)
                         self.fromLatString = String.init(format: "%.6f", self.placeFromCoordinate.latitude)
@@ -267,7 +225,6 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
                     }
 
                     if let place = place {
-//                        print("Place coordinate \(place.coordinate)")
                         self.placeToCoordinate = place.coordinate
                         self.toLonString = String.init(format: "%.6f", self.placeToCoordinate.longitude)
                         self.toLatString = String.init(format: "%.6f", self.placeToCoordinate.latitude)
@@ -324,9 +281,7 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
                 if self.textFieldSelected == self.dateFromTextField {
                     self.dateFromString = (self.dateTimeServerFormat?.string(from: date))!
                 }
-//                if self.textFieldSelected == self.dateToTextField {
-//                    self.dateToString = (self.dateTimeServerFormat?.string(from: date))!
-//                }
+
                 self.dateToSampleDatetime = date.addingTimeInterval(3600*24) as NSDate?
                 picker.isHidden = true
             }
@@ -337,9 +292,6 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
             if textField == carHireTypeTextField {
                 carHireTypeDropdown.show()
             }
-//            if textField == carTypeTextField {
-//                carTypeDropdown.show()
-//            }
             if textField == whoHireTextField {
                 whoHireDropdown.show()
             }

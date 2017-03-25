@@ -17,8 +17,8 @@ class Transaction: NSObject {
         return _content
     }
     
-    var date: Date {
-        return _date.serverDateTimeToDate()
+    var date: String {
+        return _date
     }
     
     var money: String {
@@ -26,16 +26,26 @@ class Transaction: NSObject {
     }
     
     init(json: JSON) {
-        _content = String(describing: json["type"])
-        _money = String(describing: json["money"])
-        let dateString = String(describing: json["date"])
-        let start = dateString.index(dateString.startIndex, offsetBy: 6)
-        let end = dateString.index(dateString.endIndex, offsetBy: -2)
-        let timeInterval: TimeInterval = Double.init(dateString.substring(with: start..<end))!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateDate = Date(timeIntervalSince1970: timeInterval)
-        _date = dateFormatter.string(from: dateDate)
+        if !json["sum"].exists() {
+            _content = String(describing: json["type"])
+            _money = String(describing: json["money"])+"."
+            _money = _money.substring(to: _money.characters.index(of: ".")!).customNumberStyle()
+            let dateString = String(describing: json["date"])
+            let start = dateString.index(dateString.startIndex, offsetBy: 6)
+            let end = dateString.index(dateString.endIndex, offsetBy: -5)
+            let timeInterval: TimeInterval = Double.init(dateString.substring(with: start..<end))!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yy"
+            let dateDate = Date(timeIntervalSince1970: timeInterval)
+            _date = dateFormatter.string(from: dateDate)
+        }
+        else {
+            _content = "Tổng Số Giao Dịch: " + String(describing: json["count"])
+            _date = ""
+            _money = String(describing: json["sum"])+"."
+            _money = _money.substring(to: _money.characters.index(of: ".")!).customNumberStyle()
+            
+        }
     }
     
 }

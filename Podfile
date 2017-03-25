@@ -7,6 +7,10 @@ target 'ThueXeToanCau' do
 
   # Pods for ThueXeToanCau
 
+#    pod 'BEMCheckBox'
+#    pod 'StatefulViewController'
+#    pod 'RAMReel'
+#    pod 'UITextField-Navigation'
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'GooglePlacePicker'
@@ -17,9 +21,6 @@ target 'ThueXeToanCau' do
     pod 'RxSwift'
     pod 'RxCocoa'
     pod 'Alamofire'
-#    pod 'StatefulViewController'
-#    pod 'RAMReel'
-#    pod 'UITextField-Navigation'
     pod 'SwiftyJSON'
     pod 'DateTimePicker'
     pod 'DropDown'
@@ -28,7 +29,7 @@ target 'ThueXeToanCau' do
     pod 'SwiftLocation'
     pod 'SwiftMessages'
     pod 'Siren'
-#    pod 'BEMCheckBox'
     pod 'M13Checkbox'
+    pod 'FSCalendar', :git => 'https://github.com/WenchaoD/FSCalendar.git'
     
 end

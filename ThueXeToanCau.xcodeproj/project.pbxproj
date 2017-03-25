@@ -10,6 +10,7 @@
 		0F836D1B1E589B230005460A /* testGPS.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0F836D1A1E589B230005460A /* testGPS.gpx */; };
 		0FB201DA1E8426CF0070D1F7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB201D91E8426CF0070D1F7 /* Transaction.swift */; };
 		0FB3D9B11E84401B00D57A14 /* DriverGetTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */; };
+		0FF29D901E8658630071B550 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF29D8F1E8658630071B550 /* TransactionCell.swift */; };
 		3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62C4111E1F81380059E673 /* DPDraggableButton.swift */; };
 		3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */; };
 		3E72B6C51E18B5C4006EAB6B /* DrivierAuctionSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */; };
@@ -60,6 +61,7 @@
 		0F836D1A1E589B230005460A /* testGPS.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = testGPS.gpx; sourceTree = SOURCE_ROOT; };
 		0FB201D91E8426CF0070D1F7 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetTransaction.swift; sourceTree = "<group>"; };
+		0FF29D8F1E8658630071B550 /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		3E62C4111E1F81380059E673 /* DPDraggableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDraggableButton.swift; sourceTree = "<group>"; };
 		3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverAuctionCell.swift; sourceTree = "<group>"; };
 		3E72B6C41E18B5C4006EAB6B /* DrivierAuctionSuccess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrivierAuctionSuccess.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */,
 				3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */,
 				3EBEDB891E1A5D3B0005C070 /* LogPassengerCell.swift */,
+				0FF29D8F1E8658630071B550 /* TransactionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				3E9709001E1362DA006F25DA /* Airport.swift in Sources */,
 				3EA9F1141E051512001FE8EA /* Config.swift in Sources */,
 				3E97091C1E136341006F25DA /* DriverBooking.swift in Sources */,
+				0FF29D901E8658630071B550 /* TransactionCell.swift in Sources */,
 				3E97092E1E13C33A006F25DA /* CustomExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,6 +627,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -646,6 +651,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

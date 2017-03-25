@@ -39,6 +39,8 @@ struct URL_APP_API {
     static let CONFIRM_DRIVER = HOSTNAME + "api/confirm"
     static let POST_DRIVER_COORDINATE = HOSTNAME + "api/postDriverGPS"
     static let PASSENGER_GET_AROUND = HOSTNAME + "api/getAround"
+    static let DRIVER_GET_TRANSACTION = HOSTNAME + "api/searchTran"
+    static let SEARCH_CARNUMBER = HOSTNAME + "api/searchCarNumber"
 }
 
 
