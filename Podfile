@@ -7,10 +7,6 @@ target 'ThueXeToanCau' do
 
   # Pods for ThueXeToanCau
 
-#    pod 'BEMCheckBox'
-#    pod 'StatefulViewController'
-#    pod 'RAMReel'
-#    pod 'UITextField-Navigation'
     pod 'GoogleMaps'
     pod 'GooglePlaces'
     pod 'GooglePlacePicker'
@@ -31,5 +27,8 @@ target 'ThueXeToanCau' do
     pod 'Siren'
     pod 'M13Checkbox'
     pod 'FSCalendar', :git => 'https://github.com/WenchaoD/FSCalendar.git'
+    
+    pod 'Fabric'
+    pod 'Crashlytics'
     
 end

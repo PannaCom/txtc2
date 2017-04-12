@@ -30,14 +30,24 @@ class Transaction: NSObject {
             _content = String(describing: json["type"])
             _money = String(describing: json["money"])+"."
             _money = _money.substring(to: _money.characters.index(of: ".")!).customNumberStyle()
+            
             let dateString = String(describing: json["date"])
-            let start = dateString.index(dateString.startIndex, offsetBy: 6)
-            let end = dateString.index(dateString.endIndex, offsetBy: -5)
-            let timeInterval: TimeInterval = Double.init(dateString.substring(with: start..<end))!
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yy"
-            let dateDate = Date(timeIntervalSince1970: timeInterval)
-            _date = dateFormatter.string(from: dateDate)
+            if dateString.range(of:"T") != nil{
+                let serverDateFormatter = DateFormatter()
+                serverDateFormatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yy"
+                _date = dateFormatter.string(from: serverDateFormatter.date(from: dateString)!)
+            }
+            else {
+                let start = dateString.index(dateString.startIndex, offsetBy: 6)
+                let end = dateString.index(dateString.endIndex, offsetBy: -5)
+                let timeInterval: TimeInterval = Double.init(dateString.substring(with: start..<end))!
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd/MM/yy"
+                let dateDate = Date(timeIntervalSince1970: timeInterval)
+                _date = dateFormatter.string(from: dateDate)
+            }
         }
         else {
             _content = "Tổng Số Giao Dịch: " + String(describing: json["count"])

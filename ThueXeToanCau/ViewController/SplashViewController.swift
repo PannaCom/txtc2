@@ -238,7 +238,7 @@ class SplashViewController: UIViewController {
         Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseJSON(completionHandler: {
             response in
             if response.result.isFailure {
-                print("Error Load Data: \(response.result.error)")
+                print("Error Load Data: \(String(describing: response.result.error))")
             }
             if response.result.isSuccess {
                 completion (response.result.value as! NSArray, true)

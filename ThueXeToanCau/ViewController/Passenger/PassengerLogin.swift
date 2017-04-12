@@ -46,13 +46,13 @@ class PassengerLogin: UIViewController {
         }.shareReplay(1)
 
         validNameObservable
-            .bindTo(errorMessageLabel.rx.isHidden)
+            .bind(to: errorMessageLabel.rx.isHidden)
             .addDisposableTo(disposeBag)
         validPhoneObservable
-            .bindTo(errorMessageLabel.rx.isHidden)
+            .bind(to: errorMessageLabel.rx.isHidden)
             .addDisposableTo(disposeBag)
         validEverythingObservable
-            .bindTo(confirmButton.rx.isEnabled)
+            .bind(to: confirmButton.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         confirmButton.rx.tap

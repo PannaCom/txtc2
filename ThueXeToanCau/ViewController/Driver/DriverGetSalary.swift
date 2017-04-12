@@ -1,13 +1,12 @@
 //
-//  DriverGetTransaction.swift
+//  DriverGetSalary.swift
 //  ThueXeToanCau
 //
-//  Created by Hoang Tuan Anh on 24/03/2017.
+//  Created by Hoang Tuan Anh on 4/13/17.
 //  Copyright © 2017 AnhHT. All rights reserved.
 //
 
 import UIKit
-import M13Checkbox
 import FSCalendar
 import Alamofire
 import SwiftyJSON
@@ -15,18 +14,18 @@ import SwiftMessages
 import DropDown
 import RxCocoa
 import RxSwift
+import SCLAlertView
 
-class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDataSource, FSCalendarDelegate, UITableViewDataSource, UITableViewDelegate {
-    
+class DriverGetSalary: UIViewController, UITextFieldDelegate, FSCalendarDataSource, FSCalendarDelegate, UITableViewDataSource, UITableViewDelegate {
+
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var biensoTextField: UITextField!
-    @IBOutlet weak var showDetailCheckbox: M13Checkbox!
     @IBOutlet weak var dateFromTextField: UITextField!
     @IBOutlet weak var dateToTextField: UITextField!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var transactions: Array<Transaction>!
+    var salarys: Array<Salary>!
     var textFieldSelected: UITextField!
     var dateFromString: String! = ""
     var dateToString: String! = ""
@@ -50,7 +49,6 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
     
     override func  viewDidLoad() {
         super.viewDidLoad()
-        showDetailCheckbox.stateChangeAnimation = .bounce(.fill)
         
         biensoTextField.delegate = self
         dateFromTextField.delegate = self
@@ -64,7 +62,7 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
         
         tableView.dataSource = self
         tableView.delegate = self
-        transactions = Array()
+        salarys = Array()
         tableView.tableFooterView = UIView(frame: .zero)
         
         carNumberDropDown.anchorView = biensoTextField
@@ -107,20 +105,29 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transactions.count
+        return salarys.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return heightLabel(text: transactions[indexPath.row].content, font: UIFont.systemFont(ofSize: 15), width: WIDTH_CONTENT)
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 40
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "transactionCellId", for: indexPath) as? TransactionCell {
-            cell.updateUI(transaction: transactions[indexPath.row])
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "salaryCellId", for: indexPath) as? SalaryCell {
+            cell.updateUI(salary: salarys[indexPath.row])
             return cell
         }
         
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let appearance = SCLAlertView.SCLAppearance(
+//            showCloseButton: true
+//        )
+        let alert = SCLAlertView()
+        let rowSalary: Salary = salarys[indexPath.row]
+        alert.showInfo("Chi tiết", subTitle: rowSalary.driverName + ", Số tài khoản: " + rowSalary.bankNumber + ", Ngân hàng: " + rowSalary.bankName)
     }
     
     @IBAction func searchButtonTouched(_ sender: Any) {
@@ -133,20 +140,20 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
         }
         
         
-        params = ["carNumber" : (biensoTextField?.text)!, "fDate" : (dateFromString)!, "tDate" : (dateToString)!, "isDetail" : showDetailCheckbox.checkState == M13Checkbox.CheckState.checked ? "true" : "false"]
+        params = ["carNumber" : (biensoTextField?.text)!, "fDate" : (dateFromString)!, "tDate" : (dateToString)!]
         let headers = [
             "Content-Type" : "text/html; charset=utf-8"
         ]
-        Alamofire.request(URL_APP_API.DRIVER_GET_TRANSACTION, method: .get, parameters: params, encoding: URLEncoding(), headers: headers).responseJSON(completionHandler: { response in
+        Alamofire.request(URL_APP_API.SEARCH_TRAN_SALARY, method: .get, parameters: params, encoding: URLEncoding(), headers: headers).responseJSON(completionHandler: { response in
             
             if response.result.isSuccess {
                 if let transResponse = JSON(response.result.value!).array {
-                    self.transactions.removeAll()
+                    self.salarys.removeAll()
                     for trans in transResponse {
-                        let trans = Transaction(json: trans)
-                        self.transactions.append(trans)
+                        let trans = Salary(json: trans)
+                        self.salarys.append(trans)
                     }
-                    if self.transactions.count == 0 {
+                    if self.salarys.count == 0 {
                         SwiftMessages.show(title:"Không tìm thấy dữ liệu", message: "Hãy kiểm tra lại thông tin", layout: .MessageViewIOS8, theme: .warning)
                     }
                     self.tableView.reloadData()
@@ -161,7 +168,7 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
                 "Content-Type" : "text/html; charset=utf-8"
             ]
             let params:[String:String] = ["keyword" : biensoTextField.text!]
-            Alamofire.request(URL_APP_API.SEARCH_CARNUMBER, method: .get, parameters: params, encoding: URLEncoding(), headers: headers).responseJSON(completionHandler: {
+            Alamofire.request(URL_APP_API.SEARCH_CARNUMBER_BANK, method: .get, parameters: params, encoding: URLEncoding(), headers: headers).responseJSON(completionHandler: {
                 response in
                 switch response.result {
                 case .success(let value):
@@ -191,5 +198,4 @@ class DriverGetTransaction: UIViewController, UITextFieldDelegate, FSCalendarDat
         return label.frame.height < 30 ? 30 : label.frame.height
         
     }
-    
 }

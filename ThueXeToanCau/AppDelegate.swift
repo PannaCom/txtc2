@@ -10,7 +10,8 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import Siren
-
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,9 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey(GOOGLE_API.KEY)
 
         let siren = Siren.shared
-        siren.forceLanguageLocalization = SirenLanguageType.Vietnamese
-        siren.alertType = SirenAlertType.force
+        siren.forceLanguageLocalization = .Vietnamese
+        siren.alertType = .force
         siren.checkVersion(checkType: .immediately)
+
+        Fabric.with([Crashlytics.self])
 
         return true
     }

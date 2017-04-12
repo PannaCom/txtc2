@@ -41,6 +41,9 @@ struct URL_APP_API {
     static let PASSENGER_GET_AROUND = HOSTNAME + "api/getAround"
     static let DRIVER_GET_TRANSACTION = HOSTNAME + "api/searchTran"
     static let SEARCH_CARNUMBER = HOSTNAME + "api/searchCarNumber"
+    static let SEARCH_CARNUMBER_BANK = HOSTNAME + "api/searchCarNumberBank"
+    static let SEARCH_TRAN_SALARY = HOSTNAME + "api/searchTranSalary"
+    static let SEARCH_TRAN_OWN = HOSTNAME + "api/searchTranOwn"
 }
 
 

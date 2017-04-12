@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0F836D1B1E589B230005460A /* testGPS.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 0F836D1A1E589B230005460A /* testGPS.gpx */; };
+		0F8448B21E9E91270032C70E /* Salary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448B11E9E91270032C70E /* Salary.swift */; };
+		0F8448B41E9E95110032C70E /* TranOwn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448B31E9E95110032C70E /* TranOwn.swift */; };
+		0F8448B61E9E9B3F0032C70E /* SalaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448B51E9E9B3F0032C70E /* SalaryCell.swift */; };
+		0F8448B81E9E9CBA0032C70E /* DriverGetSalary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448B71E9E9CBA0032C70E /* DriverGetSalary.swift */; };
+		0F8448BA1E9EABE80032C70E /* TranOwnCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448B91E9EABE80032C70E /* TranOwnCell.swift */; };
+		0F8448BC1E9EACC10032C70E /* DriverGetTranOwn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448BB1E9EACC10032C70E /* DriverGetTranOwn.swift */; };
 		0FB201DA1E8426CF0070D1F7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB201D91E8426CF0070D1F7 /* Transaction.swift */; };
 		0FB3D9B11E84401B00D57A14 /* DriverGetTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */; };
 		0FF29D901E8658630071B550 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF29D8F1E8658630071B550 /* TransactionCell.swift */; };
@@ -59,6 +65,12 @@
 /* Begin PBXFileReference section */
 		09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThueXeToanCau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F836D1A1E589B230005460A /* testGPS.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = testGPS.gpx; sourceTree = SOURCE_ROOT; };
+		0F8448B11E9E91270032C70E /* Salary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Salary.swift; sourceTree = "<group>"; };
+		0F8448B31E9E95110032C70E /* TranOwn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranOwn.swift; sourceTree = "<group>"; };
+		0F8448B51E9E9B3F0032C70E /* SalaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalaryCell.swift; sourceTree = "<group>"; };
+		0F8448B71E9E9CBA0032C70E /* DriverGetSalary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetSalary.swift; sourceTree = "<group>"; };
+		0F8448B91E9EABE80032C70E /* TranOwnCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranOwnCell.swift; sourceTree = "<group>"; };
+		0F8448BB1E9EACC10032C70E /* DriverGetTranOwn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetTranOwn.swift; sourceTree = "<group>"; };
 		0FB201D91E8426CF0070D1F7 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetTransaction.swift; sourceTree = "<group>"; };
 		0FF29D8F1E8658630071B550 /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
@@ -183,6 +195,8 @@
 				3E9708FF1E1362DA006F25DA /* TabItem.swift */,
 				3EBEDB8D1E1A67270005C070 /* LogPassenger.swift */,
 				0FB201D91E8426CF0070D1F7 /* Transaction.swift */,
+				0F8448B11E9E91270032C70E /* Salary.swift */,
+				0F8448B31E9E95110032C70E /* TranOwn.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,6 +209,8 @@
 				3E72B6C61E18E691006EAB6B /* DriverBookingCell.swift */,
 				3EBEDB891E1A5D3B0005C070 /* LogPassengerCell.swift */,
 				0FF29D8F1E8658630071B550 /* TransactionCell.swift */,
+				0F8448B51E9E9B3F0032C70E /* SalaryCell.swift */,
+				0F8448B91E9EABE80032C70E /* TranOwnCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -223,6 +239,8 @@
 				3E97090C1E136341006F25DA /* DriverGetBooking.swift */,
 				3EBEDB8B1E1A647F0005C070 /* DriverLogPassengerBooking.swift */,
 				0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */,
+				0F8448B71E9E9CBA0032C70E /* DriverGetSalary.swift */,
+				0F8448BB1E9EACC10032C70E /* DriverGetTranOwn.swift */,
 			);
 			path = Driver;
 			sourceTree = "<group>";
@@ -334,6 +352,7 @@
 				3EA9F0FC1E050487001FE8EA /* Resources */,
 				BBF82614C43E435A72D667A0 /* [CP] Embed Pods Frameworks */,
 				AAE06693CBEA3A6B9980C7A5 /* [CP] Copy Pods Resources */,
+				0F8448B01E9E7ED50032C70E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -400,6 +419,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0F8448B01E9E7ED50032C70E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 580e27f4d77c3f72ee5571118c7c703e3da27cc0 b18ae500d522a95886109e0727af5f7591e1e139115f0a46fe48d12fe82d5da5\n";
+		};
 		4AAC0593F8F22DE2223AF013 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,7 +488,9 @@
 				3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */,
 				3E97091D1E136341006F25DA /* DriverBookingInfo.swift in Sources */,
 				3E9709201E136341006F25DA /* DriverLogin.swift in Sources */,
+				0F8448B81E9E9CBA0032C70E /* DriverGetSalary.swift in Sources */,
 				3E97091F1E136341006F25DA /* DriverGetBooking.swift in Sources */,
+				0F8448B61E9E9B3F0032C70E /* SalaryCell.swift in Sources */,
 				3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */,
 				3E97092B1E136341006F25DA /* SelectRole.swift in Sources */,
 				3E97091B1E136341006F25DA /* DriverAuction.swift in Sources */,
@@ -469,6 +503,7 @@
 				3EBEDB8A1E1A5D3B0005C070 /* LogPassengerCell.swift in Sources */,
 				3E9709291E136341006F25DA /* PassengerLogin.swift in Sources */,
 				3E9709261E136341006F25DA /* PassengerGetBooking.swift in Sources */,
+				0F8448B41E9E95110032C70E /* TranOwn.swift in Sources */,
 				3EBEDB8E1E1A67270005C070 /* LogPassenger.swift in Sources */,
 				3E9708F91E1362AF006F25DA /* TabSwitcherItemsProvider.swift in Sources */,
 				3EBEDB8C1E1A647F0005C070 /* DriverLogPassengerBooking.swift in Sources */,
@@ -483,8 +518,11 @@
 				3E97091E1E136341006F25DA /* DriverBookingMap.swift in Sources */,
 				3EC801CF1E1BB37800EA7F29 /* AlamofireManager.swift in Sources */,
 				0FB3D9B11E84401B00D57A14 /* DriverGetTransaction.swift in Sources */,
+				0F8448BC1E9EACC10032C70E /* DriverGetTranOwn.swift in Sources */,
 				0FB201DA1E8426CF0070D1F7 /* Transaction.swift in Sources */,
+				0F8448BA1E9EABE80032C70E /* TranOwnCell.swift in Sources */,
 				3EA9F1021E050487001FE8EA /* AppDelegate.swift in Sources */,
+				0F8448B21E9E91270032C70E /* Salary.swift in Sources */,
 				3E9709241E136341006F25DA /* PassengerBookingMap.swift in Sources */,
 				3E9708FA1E1362AF006F25DA /* TabsViewController.swift in Sources */,
 				3E9709001E1362DA006F25DA /* Airport.swift in Sources */,

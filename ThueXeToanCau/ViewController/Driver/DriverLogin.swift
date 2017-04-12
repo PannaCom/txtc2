@@ -56,7 +56,7 @@ class DriverLogin: UIViewController {
             }.shareReplay(1)
 
         validEverythingObservable
-            .bindTo(loginButton.rx.isEnabled)
+            .bind(to: loginButton.rx.isEnabled)
             .addDisposableTo(disposeBag)
 
         loginButton.rx.tap

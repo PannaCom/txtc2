@@ -129,7 +129,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                         dateTo = self.dateToString
                     }
                     else {
-                        dateTo = (self.dateTimeServerFormat?.string(from: self.dateToSampleDatetime as! Date))!
+                        dateTo = (self.dateTimeServerFormat?.string(from: self.dateToSampleDatetime! as Date))!
                     }
 
                     let params:Dictionary<String, String> = ["car_from" : self.placeFromTextField.text!,
@@ -152,7 +152,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                         print(response.result.value!)
 
                         if response.result.isFailure {
-                            print("Error Load Data: \(response.result.error)")
+                            print("Error Load Data: \(String(describing: response.result.error))")
                         }
                         if response.result.isSuccess {
                             let serverResponse = response.result.value?.characters.split(separator: Character.init("_")).map(String.init)
@@ -286,7 +286,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                         self.placeFromTextField.text = self.airportTextField.text
                         self.placeToTextField.text = self.airportHireTypeTextField.text
 
-                        let airPort = STATIC_DATA.AIRPORT.filter{ ($0 as AnyObject).airportName == self.airportTextField.text!}.first as! Airport
+                        let airPort = STATIC_DATA.AIRPORT.filter{ ($0 as! Airport).airportName == self.airportTextField.text!}.first as! Airport
 
                         self.fromLonString = airPort.lon1
                         self.fromLatString = airPort.lat1
