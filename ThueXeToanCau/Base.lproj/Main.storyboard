@@ -2261,6 +2261,7 @@
                         <outlet property="passTextField" destination="Z1O-FM-jYB" id="Wg2-hi-edc"/>
                         <outlet property="phoneTextField" destination="6Nl-OQ-ubU" id="hd6-CX-YYO"/>
                         <outlet property="registerButton" destination="AXW-by-4Pm" id="8fL-lH-u0A"/>
+                        <outlet property="titleLable" destination="w45-5h-XF3" id="B6L-0t-aq8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OTf-QJ-sCt" userLabel="First Responder" sceneMemberID="firstResponder"/>

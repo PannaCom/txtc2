@@ -89,7 +89,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         }).resume()
 
         menuDropDown.anchorView = menuButton
-        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng", "Xem sao kê"/*, "Sửa thông tin"*/]
+        menuDropDown.dataSource = ["Đăng chuyến tìm khách đi chung/chiều về", "Chuyến đấu giá thành công", "Danh sách chuyến đã đăng", "Xem sao kê", "Sửa thông tin"]
         menuDropDown.bottomOffset = CGPoint(x: menuButton.bounds.width-menuDropDown.bounds.width, y: menuButton.bounds.height)
         menuDropDown.selectionBackgroundColor = UIColor.yellow
         

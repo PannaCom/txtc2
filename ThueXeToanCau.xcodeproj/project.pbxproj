@@ -16,6 +16,7 @@
 		0F8448BC1E9EACC10032C70E /* DriverGetTranOwn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8448BB1E9EACC10032C70E /* DriverGetTranOwn.swift */; };
 		0FB201DA1E8426CF0070D1F7 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB201D91E8426CF0070D1F7 /* Transaction.swift */; };
 		0FB3D9B11E84401B00D57A14 /* DriverGetTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */; };
+		0FE2F8D91EA22BF6000FBAC0 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE2F8D81EA22BF6000FBAC0 /* Driver.swift */; };
 		0FF29D901E8658630071B550 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF29D8F1E8658630071B550 /* TransactionCell.swift */; };
 		3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62C4111E1F81380059E673 /* DPDraggableButton.swift */; };
 		3E72B6C31E16AFBC006EAB6B /* DriverAuctionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */; };
@@ -73,6 +74,7 @@
 		0F8448BB1E9EACC10032C70E /* DriverGetTranOwn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetTranOwn.swift; sourceTree = "<group>"; };
 		0FB201D91E8426CF0070D1F7 /* Transaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		0FB3D9B01E84401B00D57A14 /* DriverGetTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverGetTransaction.swift; sourceTree = "<group>"; };
+		0FE2F8D81EA22BF6000FBAC0 /* Driver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 		0FF29D8F1E8658630071B550 /* TransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		3E62C4111E1F81380059E673 /* DPDraggableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDraggableButton.swift; sourceTree = "<group>"; };
 		3E72B6C21E16AFBC006EAB6B /* DriverAuctionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverAuctionCell.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				0FB201D91E8426CF0070D1F7 /* Transaction.swift */,
 				0F8448B11E9E91270032C70E /* Salary.swift */,
 				0F8448B31E9E95110032C70E /* TranOwn.swift */,
+				0FE2F8D81EA22BF6000FBAC0 /* Driver.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				3E9709201E136341006F25DA /* DriverLogin.swift in Sources */,
 				0F8448B81E9E9CBA0032C70E /* DriverGetSalary.swift in Sources */,
 				3E97091F1E136341006F25DA /* DriverGetBooking.swift in Sources */,
+				0FE2F8D91EA22BF6000FBAC0 /* Driver.swift in Sources */,
 				0F8448B61E9E9B3F0032C70E /* SalaryCell.swift in Sources */,
 				3E62C4121E1F81380059E673 /* DPDraggableButton.swift in Sources */,
 				3E97092B1E136341006F25DA /* SelectRole.swift in Sources */,

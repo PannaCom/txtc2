@@ -127,7 +127,8 @@ class DriverGetSalary: UIViewController, UITextFieldDelegate, FSCalendarDataSour
 //        )
         let alert = SCLAlertView()
         let rowSalary: Salary = salarys[indexPath.row]
-        alert.showInfo("Chi tiết", subTitle: rowSalary.driverName + ", Số tài khoản: " + rowSalary.bankNumber + ", Ngân hàng: " + rowSalary.bankName)
+        
+        alert.showInfo("Chi tiết", subTitle: rowSalary.driverName + ", Số tài khoản: " + rowSalary.bankNumber + ", Ngân hàng: " + rowSalary.bankName, closeButtonTitle: "Xong", animationStyle: SCLAnimationStyle.topToBottom)
     }
     
     @IBAction func searchButtonTouched(_ sender: Any) {

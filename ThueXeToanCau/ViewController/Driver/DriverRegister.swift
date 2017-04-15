@@ -13,12 +13,14 @@ import SwiftyJSON
 import SwiftMessages
 import DropDown
 import KRProgressHUD
+import SCLAlertView
 
 class DriverRegister: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var backButton: UIButton!
     @IBOutlet var registerButton: UIButton!
     
+    @IBOutlet weak var titleLable: UILabel!
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var phoneTextField: UITextField!
     @IBOutlet var passTextField: UITextField!
@@ -42,6 +44,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
     let disposeBag = DisposeBag()
 
 //    var isEditing: Bool?// = false
+    var driverId: String! = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,18 +65,51 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
             .subscribe(onNext: {
                 if self.checkTextFieldEmpty() {
                     if self.checkPassword() {
-                        var carSize = self.carSizeTextField.text!
-                        carSize = carSize.substring(to: (carSize.range(of: " ")?.lowerBound)!)
-                        let params:Dictionary<String, String> = ["name" : self.nameTextField.text!, "phone" : self.phoneTextField.text!, "pass" : self.passTextField.text!, "car_made" : self.carMadeTextField.text!, "car_model" : self.carModelTextField.text!, "car_size" : carSize, "car_year" : self.carYearTextField.text!, "car_number" : self.carNumberTextField.text!, "car_type" : self.carTypeTextField.text!, "card_identify" : self.identifyTextField.text!, "license" : self.licenseTextField.text!, "regId" : "test", "os" : DEVICE_OS.iOS]
-                        print(params)
-                        AlamofireManager.sharedInstance.manager.request(URL_APP_API.REGISTER_DRIVER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
-                            if response.result.isSuccess {
-                                SwiftMessages.show(title: "", message: "Đăng ký thành công", layout: .StatusLine, theme: .success)
-                            }
-                            else {
-                                SwiftMessages.show(title: "Lỗi:", message: "Đăng ký không thành công", layout: .MessageViewIOS8, theme: .error)
-                            }
-                        })
+                        if self.isEditing {
+                            let alert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(
+                                showCloseButton: false
+                            ))
+                            let passTf = alert.addTextField("Mật khẩu cũ")
+                            passTf.isSecureTextEntry = true
+                            alert.addButton("Xong", action: {
+                                if passTf.text == UserDefaults.standard.string(forKey: DRIVER_INFO.PASS)! {
+                                    var carSize = self.carSizeTextField.text!
+                                    carSize = carSize.substring(to: (carSize.range(of: " ")?.lowerBound)!)
+                                    let params:Dictionary<String, String> = ["name" : self.nameTextField.text!, "phone" : self.phoneTextField.text!, "pass" : self.passTextField.text!, "car_made" : self.carMadeTextField.text!, "car_model" : self.carModelTextField.text!, "car_size" : carSize, "car_year" : self.carYearTextField.text!, "car_number" : self.carNumberTextField.text!, "car_type" : self.carTypeTextField.text!, "card_identify" : self.identifyTextField.text!, "license" : self.licenseTextField.text!, "regId" : "test", "os" : DEVICE_OS.iOS, "id" : self.driverId]
+                                    print(params)
+                                    AlamofireManager.sharedInstance.manager.request(URL_APP_API.REGISTER_DRIVER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                                        if response.result.isSuccess {
+                                            SwiftMessages.show(title: "", message: "Lưu thông tin thành công", layout: .StatusLine, theme: .success)
+                                            self.dismiss(animated: true, completion: nil)
+                                        }
+                                        else {
+                                            SwiftMessages.show(title: "Lỗi:", message: "Không thể lưu", layout: .MessageViewIOS8, theme: .error)
+                                        }
+                                    })
+                                }
+                                else {
+                                    SwiftMessages.show(title: "Lỗi:", message: "Mật khẩu cũ bạn nhập không đúng", layout: .MessageViewIOS8, theme: .error)
+                                }
+                                
+                            })
+                            
+                            alert.showEdit("Nhập mật khẩu cũ:", subTitle: "")
+                        }
+                        else {
+                            var carSize = self.carSizeTextField.text!
+                            carSize = carSize.substring(to: (carSize.range(of: " ")?.lowerBound)!)
+                            let params:Dictionary<String, String> = ["name" : self.nameTextField.text!, "phone" : self.phoneTextField.text!, "pass" : self.passTextField.text!, "car_made" : self.carMadeTextField.text!, "car_model" : self.carModelTextField.text!, "car_size" : carSize, "car_year" : self.carYearTextField.text!, "car_number" : self.carNumberTextField.text!, "car_type" : self.carTypeTextField.text!, "card_identify" : self.identifyTextField.text!, "license" : self.licenseTextField.text!, "regId" : "test", "os" : DEVICE_OS.iOS]
+                            print(params)
+                            AlamofireManager.sharedInstance.manager.request(URL_APP_API.REGISTER_DRIVER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                                if response.result.isSuccess {
+                                    SwiftMessages.show(title: "", message: "Đăng ký thành công", layout: .StatusLine, theme: .success)
+                                    self.dismiss(animated: true, completion: nil)
+                                }
+                                else {
+                                    SwiftMessages.show(title: "Lỗi:", message: "Đăng ký không thành công", layout: .MessageViewIOS8, theme: .error)
+                                }
+                            })
+                        }
                     }
                 }
                 else {
@@ -91,6 +127,55 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
         setupDropdown()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if self.isEditing {
+            titleLable.text = "SỬA THÔNG TIN"
+            registerButton.setTitle("Lưu", for: .normal)
+        }
+        else {
+            titleLable.text = "ĐĂNG KÝ TÀI XẾ"
+            registerButton.setTitle("Đăng ký", for: .normal)
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.isEditing {
+            KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang tải dữ liệu")
+            let userDefault = UserDefaults.standard
+            AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : userDefault.string(forKey: DRIVER_INFO.PHONE)!, "pass" : userDefault.string(forKey: DRIVER_INFO.PASS)!], encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { response in
+                KRProgressHUD.dismiss()
+                if response.result.isSuccess {
+                    if let values:Array = JSON(response.result.value!).array {
+                        if values.count > 0 {
+                            let driver = Driver(json: values.first!)
+                            self.nameTextField.text = driver.name
+                            self.phoneTextField.text = driver.phone
+                            self.carMadeTextField.text = driver.carMade
+                            self.carModelTextField.text = driver.carModel
+                            self.identifyTextField.text = driver.cardIdentify
+                            self.licenseTextField.text = driver.license
+                            self.carNumberTextField.text = driver.carNumber
+                            self.carSizeTextField.text = driver.carSize
+                            self.carTypeTextField.text = driver.carType
+                            self.carYearTextField.text = driver.carYear
+                            self.passTextField.text = userDefault.string(forKey: DRIVER_INFO.PASS)!
+                            self.confirmPassTextField.text = userDefault.string(forKey: DRIVER_INFO.PASS)!
+                            self.driverId = driver.myId
+                        }
+                        else{
+                            SwiftMessages.show(title:"Lỗi", message: "Không thể đăng nhập", layout: .MessageViewIOS8, theme: .error)
+                        }
+                    }
+                }
+                else {
+                    SwiftMessages.show(title:"Lỗi", message: "Không thể đăng nhập", layout: .MessageViewIOS8, theme: .error)
+                }
+            })
+        }
+    }
 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == carMadeTextField {
@@ -98,7 +183,8 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
             return false
         }
         if textField == carModelTextField {
-            carModelDropDown.show()
+            searchCarModel(for: carMadeTextField.text!)
+//            carModelDropDown.show()
             return false
         }
         if textField == carSizeTextField {
@@ -165,7 +251,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
                 self.view.endEditing(true)
                 self.carMadeTextField.text = item
                 self.carModelTextField.text = ""
-                self.searchCarModel(for: item)
+//                self.searchCarModel(for: item)
             }
         }
 
@@ -192,13 +278,14 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
     }
 
     func searchCarModel(for carMade: String) {
-        KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang tải dữ liệu")
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_CAR_MODEL, method: HTTPMethod.post, parameters: ["keyword" : carMade], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in
-            KRProgressHUD.dismiss()
+            
             if response.result.isSuccess {
                 let r:NSArray = response.result.value as! NSArray
                 self.carModelList = r.value(forKey: "name") as! NSArray
                 self.carModelDropDown.dataSource = self.carModelList as! [String]
+                
+                self.carModelDropDown.show()
             }
             else {
                 SwiftMessages.show(title: "Lỗi:", message: "Không thể tải Danh sách mẫu xe", layout: .MessageViewIOS8, theme: .error)
