@@ -63,8 +63,19 @@
 		CF6B2AC6AAF924877B936BFC /* Pods_ThueXeToanCau.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0F1B92871EAA63110074BE69 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EA9F0F61E050487001FE8EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3EA9F0FD1E050487001FE8EA;
+			remoteInfo = ThueXeToanCau;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		09DF0843C48E82F0EAB02B48 /* Pods_ThueXeToanCau.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThueXeToanCau.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F1B92821EAA63110074BE69 /* ThueXeToanCauUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThueXeToanCauUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F836D1A1E589B230005460A /* testGPS.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = testGPS.gpx; sourceTree = SOURCE_ROOT; };
 		0F8448B11E9E91270032C70E /* Salary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Salary.swift; sourceTree = "<group>"; };
 		0F8448B31E9E95110032C70E /* TranOwn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranOwn.swift; sourceTree = "<group>"; };
@@ -140,6 +151,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0F1B927F1EAA63110074BE69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EA9F0FB1E050487001FE8EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA9F0FE1E050487001FE8EA /* ThueXeToanCau.app */,
+				0F1B92821EAA63110074BE69 /* ThueXeToanCauUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -345,6 +364,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0F1B92811EAA63110074BE69 /* ThueXeToanCauUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F1B928B1EAA63110074BE69 /* Build configuration list for PBXNativeTarget "ThueXeToanCauUITests" */;
+			buildPhases = (
+				0F1B927E1EAA63110074BE69 /* Sources */,
+				0F1B927F1EAA63110074BE69 /* Frameworks */,
+				0F1B92801EAA63110074BE69 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F1B92881EAA63110074BE69 /* PBXTargetDependency */,
+			);
+			name = ThueXeToanCauUITests;
+			productName = ThueXeToanCauUITests;
+			productReference = 0F1B92821EAA63110074BE69 /* ThueXeToanCauUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		3EA9F0FD1E050487001FE8EA /* ThueXeToanCau */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EA9F1101E050487001FE8EA /* Build configuration list for PBXNativeTarget "ThueXeToanCau" */;
@@ -372,10 +409,15 @@
 		3EA9F0F61E050487001FE8EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = AnhHT;
 				TargetAttributes = {
+					0F1B92811EAA63110074BE69 = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 3EA9F0FD1E050487001FE8EA;
+					};
 					3EA9F0FD1E050487001FE8EA = {
 						CreatedOnToolsVersion = 8.2;
 						ProvisioningStyle = Automatic;
@@ -401,11 +443,19 @@
 			projectRoot = "";
 			targets = (
 				3EA9F0FD1E050487001FE8EA /* ThueXeToanCau */,
+				0F1B92811EAA63110074BE69 /* ThueXeToanCauUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0F1B92801EAA63110074BE69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EA9F0FC1E050487001FE8EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -483,6 +533,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0F1B927E1EAA63110074BE69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3EA9F0FA1E050487001FE8EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -539,6 +596,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		0F1B92881EAA63110074BE69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3EA9F0FD1E050487001FE8EA /* ThueXeToanCau */;
+			targetProxy = 0F1B92871EAA63110074BE69 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		3EA9F1051E050487001FE8EA /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -559,6 +624,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0F1B92891EAA63110074BE69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = H3K8K5GR53;
+				INFOPLIST_FILE = ThueXeToanCauUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCauUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ThueXeToanCau;
+			};
+			name = Debug;
+		};
+		0F1B928A1EAA63110074BE69 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = H3K8K5GR53;
+				INFOPLIST_FILE = ThueXeToanCauUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCauUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ThueXeToanCau;
+			};
+			name = Release;
+		};
 		3EA9F10E1E050487001FE8EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -667,7 +762,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau.NoiCar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -691,7 +786,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ThueXeToanCau.NoiCar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -703,6 +798,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0F1B928B1EAA63110074BE69 /* Build configuration list for PBXNativeTarget "ThueXeToanCauUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F1B92891EAA63110074BE69 /* Debug */,
+				0F1B928A1EAA63110074BE69 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		3EA9F0F91E050487001FE8EA /* Build configuration list for PBXProject "ThueXeToanCau" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

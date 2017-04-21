@@ -271,7 +271,7 @@ class DriverBookingInfo: UIViewController, UITextFieldDelegate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM hh:mm a"
 
-            let picker = DateTimePicker.show()
+            let picker = DateTimePicker.show(minimumDate: Date())
             picker.doneButtonTitle = "Xong"
             picker.todayButtonTitle = "Hôm nay"
 

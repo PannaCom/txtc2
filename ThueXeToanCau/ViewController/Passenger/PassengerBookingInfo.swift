@@ -438,10 +438,10 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM hh:mm a"
 
-            let picker = DateTimePicker.show()
+            let picker = DateTimePicker.show(minimumDate: Date())
             picker.doneButtonTitle = "Xong"
             picker.todayButtonTitle = "Hôm nay"
-
+            
             picker.highlightColor = UIColor(red: 255.0/255.0, green: 138.0/255.0, blue: 138.0/255.0, alpha: 1)
             picker.completionHandler = { date in
                 textField.text = dateFormatter.string(from: date)
