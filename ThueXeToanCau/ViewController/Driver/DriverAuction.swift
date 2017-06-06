@@ -66,16 +66,16 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self?.tickets.removeAll()
                     for ticket in ticketResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
-                        if ticket.priceBookDouble >= 1000000 {
-                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24*5, since: Date()) {
+//                        if ticket.priceBookDouble >= 1000000 {
+//                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24*5, since: Date()) {
                                 self?.tickets.append(ticket)
-                            }
-                        }
-                        else {
-                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24, since: Date()) {
-                                self?.tickets.append(ticket)
-                            }
-                        }
+//                            }
+//                        }
+//                        else {
+//                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24, since: Date()) {
+//                                self?.tickets.append(ticket)
+//                            }
+//                        }
                     }
                     self?.tableView.reloadData()
                     self?.tableView.es_stopPullToRefresh()
