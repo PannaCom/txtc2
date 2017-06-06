@@ -100,6 +100,11 @@ class PassengerTicket {
         return _dateFrom.serverDateTimeToDate()
     }
 
+    var dateBookDate: Date {
+        return _dateBook.serverDateTimeToDate()
+    }
+
+
 //    var dateToDate: Date {
 //        return _dateTo.serverDateTimeToDate()
 //    }
