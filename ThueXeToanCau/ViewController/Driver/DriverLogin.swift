@@ -61,7 +61,7 @@ class DriverLogin: UIViewController {
 
         loginButton.rx.tap
             .subscribe(onNext: {
-                KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang đăng nhập")
+                KRProgressHUD.show(withMessage: "Đang đăng nhập")
                 self.view.endEditing(true)
 
                 AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : self.phoneTextField.text!, "pass" : self.passTextFiled.text!], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { response in

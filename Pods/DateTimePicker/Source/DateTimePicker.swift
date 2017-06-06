@@ -14,9 +14,9 @@ import UIKit
     var contentHeight: CGFloat = 310
     
     // public vars
-    public var backgroundViewColor: UIColor = .clear {
+    public var backgroundViewColor: UIColor? = .clear {
         didSet {
-            backgroundColor = backgroundViewColor
+            shadowView.backgroundColor = backgroundViewColor
         }
     }
     
@@ -24,10 +24,21 @@ import UIKit
         didSet {
             todayButton.setTitleColor(highlightColor, for: .normal)
             colonLabel1.textColor = highlightColor
+            colonLabel2.textColor = highlightColor
         }
     }
     
-    public var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1)
+    public var darkColor = UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 1) {
+        didSet {
+            dateTitleLabel.textColor = darkColor
+            cancelButton.setTitleColor(darkColor.withAlphaComponent(0.5), for: .normal)
+            doneButton.backgroundColor = darkColor.withAlphaComponent(0.5)
+            borderTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
+            borderBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
+            separatorTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
+            separatorBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
+        }
+    }
     
     public var daysBackgroundColor = UIColor(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, alpha: 1)
     
@@ -88,6 +99,7 @@ import UIKit
         }
     }
     
+    public var timeZone = TimeZone.current
     public var completionHandler: ((Date)->Void)?
     
     // private vars
@@ -105,12 +117,21 @@ import UIKit
     private var colonLabel1: UILabel!
     private var colonLabel2: UILabel!
     
+    private var borderTopView: UIView!
+    private var borderBottomView: UIView!
+    private var separatorTopView: UIView!
+    private var separatorBottomView: UIView!
+    
     internal var minimumDate: Date!
     internal var maximumDate: Date!
     
     internal var calendar: Calendar = .current
     internal var dates: [Date]! = []
-    internal var components: DateComponents!
+    internal var components: DateComponents! {
+        didSet {
+            components.timeZone = timeZone
+        }
+    }
     
     
     @objc open class func show(selected: Date? = nil, minimumDate: Date? = nil, maximumDate: Date? = nil) -> DateTimePicker {
@@ -142,7 +163,7 @@ import UIKit
                                           y: 0,
                                           width: frame.width,
                                           height: frame.height))
-        shadowView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        shadowView.backgroundColor = backgroundViewColor ?? UIColor.black.withAlphaComponent(0.3)
         shadowView.alpha = 1
         let shadowViewTap = UITapGestureRecognizer(target: self, action: #selector(DateTimePicker.dismissView(sender:)))
         shadowView.addGestureRecognizer(shadowViewTap)
@@ -213,11 +234,11 @@ import UIKit
         contentView.addSubview(dayCollectionView)
         
         // top & bottom borders on day collection view
-        let borderTopView = UIView(frame: CGRect(x: 0, y: titleView.frame.height, width: titleView.frame.width, height: 1))
+        borderTopView = UIView(frame: CGRect(x: 0, y: titleView.frame.height, width: titleView.frame.width, height: 1))
         borderTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
         contentView.addSubview(borderTopView)
         
-        let borderBottomView = UIView(frame: CGRect(x: 0, y: dayCollectionView.frame.origin.y + dayCollectionView.frame.height, width: titleView.frame.width, height: 1))
+        borderBottomView = UIView(frame: CGRect(x: 0, y: dayCollectionView.frame.origin.y + dayCollectionView.frame.height, width: titleView.frame.width, height: 1))
         borderBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
         contentView.addSubview(borderBottomView)
         
@@ -302,13 +323,13 @@ import UIKit
         contentView.addSubview(colonLabel2)
         
         // time separators
-        let separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
+        separatorTopView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
         separatorTopView.backgroundColor = darkColor.withAlphaComponent(0.2)
         separatorTopView.center = CGPoint(x: contentView.frame.width / 2, y: borderBottomView.frame.origin.y + 36)
         separatorTopView.isHidden = isDatePickerOnly
         contentView.addSubview(separatorTopView)
         
-        let separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
+        separatorBottomView = UIView(frame: CGRect(x: 0, y: 0, width: 90 - extraSpace * 2, height: 1))
         separatorBottomView.backgroundColor = darkColor.withAlphaComponent(0.2)
         separatorBottomView.center = CGPoint(x: contentView.frame.width / 2, y: separatorTopView.frame.origin.y + 36)
         separatorBottomView.isHidden = isDatePickerOnly

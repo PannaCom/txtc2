@@ -61,12 +61,21 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         let _ = tableView.es_addPullToRefresh { [weak self] in
             let params:Dictionary<String, String> = ["lon" : String.init(format: "%.6f", (self?.currentLocation?.longitude)!), "lat" : String.init(format: "%.6f", (self?.currentLocation?.latitude)!), "order" : "1", "car_hire_type" : "Một chiều,Khứ hồi,Sân bay"]
 
-            AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_BOOKING_CUSTOMER, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
+            AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET__BOOKING, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: {response in
                 if let ticketResponse = JSON(response.result.value!).array {
                     self?.tickets.removeAll()
                     for ticket in ticketResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
-                        self?.tickets.append(ticket)
+                        if ticket.priceBookDouble >= 1000000 {
+                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24*5, since: Date()) {
+                                self?.tickets.append(ticket)
+                            }
+                        }
+                        else {
+                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24, since: Date()) {
+                                self?.tickets.append(ticket)
+                            }
+                        }
                     }
                     self?.tableView.reloadData()
                     self?.tableView.es_stopPullToRefresh()

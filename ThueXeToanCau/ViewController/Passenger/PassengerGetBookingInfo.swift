@@ -106,15 +106,16 @@ class PassengerGetBookingInfo: UIViewController, UITableViewDelegate, UITableVie
     }
 
     func passengerBooking(bookingId: String) {
-        KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, font: nil, message: "Đang đặt vé")
+        KRProgressHUD.show(withMessage: "Đang đặt vé")
+//        KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, font: nil, message: "Đang đặt vé")
 
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_LOG, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "name" : self.name!, "phone" : self.phone!], encoding: JSONEncoding.default, headers: nil).responseString { response in
 
             if response.result.isSuccess && response.result.value == "1"{
-                KRProgressHUD.showSuccess(progressHUDStyle: .whiteColor, maskType: .white, message: "Xong")
+                KRProgressHUD.showSuccess(withMessage: "Xong")
             }
             else {
-                KRProgressHUD.showError(message: "Lỗi")
+                KRProgressHUD.showError(withMessage: "Lỗi")
             }
 
         }

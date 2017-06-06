@@ -30,6 +30,7 @@ class PassengerTicket {
     private var _whoHire: String!
     private var _priceMax: String!
 
+    private(set) var priceBookDouble: Double!
 
     var hireType: String {
         return _hireType
@@ -124,5 +125,6 @@ class PassengerTicket {
         _priceMax = String(describing: json["book_price_max"])
         _priceBook = String(describing: json["book_price"])
         _whoHire = String(describing: json["car_who_hire"])
+        priceBookDouble = json["book_price"].doubleValue
     }
 }

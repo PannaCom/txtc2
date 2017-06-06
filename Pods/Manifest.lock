@@ -4,32 +4,34 @@ PODS:
   - CountdownLabel (2.0.1)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
-  - DateTimePicker (1.1.1)
+  - DateTimePicker (1.1.2)
   - DropDown (2)
   - ESPullToRefresh (2.6)
   - Fabric (1.6.11)
-  - FSCalendar (2.7.4)
-  - GoogleMaps (2.2.0):
-    - GoogleMaps/Maps (= 2.2.0)
-  - GoogleMaps/Base (2.2.0)
-  - GoogleMaps/Maps (2.2.0):
+  - FSCalendar (2.7.8)
+  - GoogleMaps (2.3.0):
+    - GoogleMaps/Maps (= 2.3.0)
+  - GoogleMaps/Base (2.3.0)
+  - GoogleMaps/Maps (2.3.0):
     - GoogleMaps/Base
-  - GooglePlacePicker (2.2.0):
-    - GoogleMaps (= 2.2.0)
-    - GooglePlaces (= 2.2.0)
-  - GooglePlaces (2.2.0):
-    - GoogleMaps/Base (= 2.2.0)
-  - KRProgressHUD (2.2.2)
+  - GooglePlacePicker (2.3.0):
+    - GoogleMaps (= 2.3.0)
+    - GooglePlaces (= 2.3.0)
+  - GooglePlaces (2.3.0):
+    - GoogleMaps/Base (= 2.3.0)
+  - KRActivityIndicatorView (2.0.2)
+  - KRProgressHUD (3.0.0):
+    - KRActivityIndicatorView (~> 2.0.2)
   - M13Checkbox (3.1.3)
-  - RxCocoa (3.4.0):
+  - RxCocoa (3.5.0):
     - RxSwift (~> 3.4)
-  - RxSwift (3.4.0)
+  - RxSwift (3.5.0)
   - SCLAlertView (0.7.0)
-  - Siren (2.0.1)
-  - SwiftLocation (2.0.2)
+  - Siren (2.0.4)
+  - SwiftLocation (2.0.7)
   - SwiftMessages (3.3.3)
   - SwiftyJSON (3.1.4)
-  - TextFieldEffects (1.3.2)
+  - TextFieldEffects (1.3.3)
 
 DEPENDENCIES:
   - Alamofire
@@ -61,7 +63,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FSCalendar:
-    :commit: f62c0518d586eb1519b1971d1478ce8aeac9f4ad
+    :commit: f002ba9615f077a02654a3664b88339d8cba7e78
     :git: https://github.com/WenchaoD/FSCalendar.git
 
 SPEC CHECKSUMS:
@@ -69,25 +71,26 @@ SPEC CHECKSUMS:
   ColorMatchTabs: f92f9ff526340c9816570ff2ee9abfc6d85d4a2b
   CountdownLabel: 1297533b42ef5c1a441cd458136c35ad93210da1
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
-  DateTimePicker: 1905792f424b712258c1059165f86f9e82bdbf4a
+  DateTimePicker: 518bffa5438ef83a7a687cc4d5e187e5c12012b8
   DropDown: 744784d9c9aa505100e942c16acd05430cbb2f0a
   ESPullToRefresh: 85f4990acf87f78c6a1466bbbee7a75d7de24db9
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FSCalendar: e95995a746acae531c4a7dd636b8393233125ec5
-  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
-  GooglePlacePicker: 345b1aabd42c9d6d9bf2369c1bae1234d903e764
-  GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
-  KRProgressHUD: ee25f70e274d1933b2ad0c8583a8552a349ce85d
+  FSCalendar: 09369a2bf554ba71cd8e8cfb627e2df22a2c2af4
+  GoogleMaps: 340a6a0bebd17c2db8abcd3921976c7c53c86cb8
+  GooglePlacePicker: 80a6719aa4d06c63524a231d0ecd8f87e87d98c2
+  GooglePlaces: 74d322c74184ea4576184089b496d291cf0dcd38
+  KRActivityIndicatorView: 2a9d5442ba8da6274db3afdf46aeaef7cf6dd8ad
+  KRProgressHUD: 14f9fad06080bdb1e59569104a8eda654c83e813
   M13Checkbox: c132a7e0eb964731855eff67b883a0b21b7c0977
-  RxCocoa: d14ef6b6029e1ddc6e966508c09289090de68ff9
-  RxSwift: 3789a1af753002a14edecdb698a2424624296a9c
+  RxCocoa: a0a09f45d0e5b48ecb6a4a7b4b4c89c88d3f633f
+  RxSwift: 18ee9d78b45edb3b0b7e79916b47a116e6dbc842
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
-  Siren: 1ecf01040a56b6b417e7b754cf3fecea7c159c1c
-  SwiftLocation: 887fa007f6f0567dfd00543c3fb356c4c793c2a6
-  SwiftMessages: '09cea3336e3fb63c3578983c8aac65acaa6d884a'
+  Siren: d950610045b6c9794602f0fdf924dda54fbd9528
+  SwiftLocation: 1fe2e15a5812e961496e82eeaca71d03e829e47a
+  SwiftMessages: 09cea3336e3fb63c3578983c8aac65acaa6d884a
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  TextFieldEffects: 9e5cce561ea39c75b86e9d3637601727a67e8b23
+  TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
 
-PODFILE CHECKSUM: 1c2aa24779aa69149531ca2ad0ad122d0ef30b2b
+PODFILE CHECKSUM: 3a5c0dda4849d59f0982786d94abb08b1e08c0cd
 
-COCOAPODS: 1.2.1.rc.1
+COCOAPODS: 1.2.0

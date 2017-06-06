@@ -143,7 +143,7 @@ class DriverRegister: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.isEditing {
-            KRProgressHUD.show(progressHUDStyle: .whiteColor, maskType: .white, activityIndicatorStyle: .black, message: "Đang tải dữ liệu")
+            KRProgressHUD.show(withMessage: "Đang tải dữ liệu")
             let userDefault = UserDefaults.standard
             AlamofireManager.sharedInstance.manager.request(URL_APP_API.LOGIN, method: HTTPMethod.post, parameters: ["phone" : userDefault.string(forKey: DRIVER_INFO.PHONE)!, "pass" : userDefault.string(forKey: DRIVER_INFO.PASS)!], encoding: URLEncoding.default, headers: nil).responseJSON(completionHandler: { response in
                 KRProgressHUD.dismiss()
