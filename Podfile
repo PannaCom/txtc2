@@ -14,14 +14,14 @@ target 'ThueXeToanCau' do
     pod 'KRProgressHUD'
     pod 'ColorMatchTabs'
     pod 'TextFieldEffects'
-    pod 'RxSwift'
+#    pod 'RxSwift'
     pod 'RxCocoa'
     pod 'Alamofire'
     pod 'SwiftyJSON'
     pod 'DateTimePicker'
     pod 'DropDown'
     pod 'SCLAlertView'
-    pod 'CountdownLabel'
+#    pod 'CountdownLabel'
     pod 'SwiftLocation'
     pod 'SwiftMessages'
     pod 'Siren'
@@ -31,4 +31,5 @@ target 'ThueXeToanCau' do
     pod 'Fabric'
     pod 'Crashlytics'
     
+    pod 'MZTimerLabel'
 end

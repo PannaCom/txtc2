@@ -7,18 +7,19 @@
 //
 
 import UIKit
-import CountdownLabel
+import MZTimerLabel
 
 protocol DriverAuctionDelegate {
     func buyNowButtonTouched(bookingId: String, priceBuy: String)
     func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String)
 }
 
-class DriverAuctionCell: UITableViewCell {
+class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
 
     var delegate: DriverAuctionDelegate?
     @IBOutlet var carHireTypeLabel: UILabel!
-    @IBOutlet var timeCountDownLabel: CountdownLabel!
+    @IBOutlet weak var timeCountDownLabel: MZTimerLabel!
+    
     @IBOutlet var carFromLabel: UILabel!
     @IBOutlet var carToLabel: UILabel!
     @IBOutlet var carSizeLabel: UILabel!
@@ -75,27 +76,22 @@ class DriverAuctionCell: UITableViewCell {
         dateToLabel.text = ticket.dateTo.serverDateTimeTo(format: "dd/MM HH:mm")
         id = ticket.id
 
-        timeCountDownLabel.timeFormat = "hh:mm:ss"
-
         if ticket.priceBookInt > CONFIG_DATA.LIMIT_PRICE_CHANGE_TIME_AUCTION {
-//            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-5*3600))
-//            timeCountDownLabel.setCountDownTime(Date.current(), minutes: ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())/60)
-            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-5*3600))
+            timeCountDownLabel.setCountDownTo(Date().addingTimeInterval(ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())))
+            
 
         }
         else {
-//            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-3600))
-//            timeCountDownLabel.setCountDownDate(Date.current(), targetDate: ticket.dateFromDate.addingTimeInterval(-3600))
-//            timeCountDownLabel.setCountDownTime(Date.current(), minutes: ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())/60)
-            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-3600))
+            timeCountDownLabel.setCountDownTo(Date().addingTimeInterval(ticket.dateFromDate.addingTimeInterval(-3600).timeIntervalSince(Date.current())))
         }
-
+        timeCountDownLabel.timerType = MZTimerLabelTypeTimer
+        timeCountDownLabel.delegate = self
         timeCountDownLabel.start()
         priceMax = ticket.priceMax
     }
 
     @IBAction func buyNowButtonTouched(_ sender: Any) {
-        if self.timeCountDownLabel.timeRemaining <= 0 {
+        if self.timeCountDownLabel.getTimeRemaining() <= 0 {
             delegate?.buyNowButtonTouched(bookingId: "-1", priceBuy: "")
         }
         else {
@@ -106,7 +102,7 @@ class DriverAuctionCell: UITableViewCell {
     }
 
     @IBAction func auctionButtonTouched(_ sender: Any) {
-        if self.timeCountDownLabel.timeRemaining <= 0 {
+        if self.timeCountDownLabel.getTimeRemaining() <= 0 {
             delegate?.auctionButtonTouched(bookingId: "-1", priceBuy: "", priceMax: "")
         }
         else {
@@ -114,6 +110,13 @@ class DriverAuctionCell: UITableViewCell {
             delegate?.auctionButtonTouched(bookingId: id!, priceBuy: priceBuy.trimmingCharacters(in: CharacterSet.init(charactersIn: "0123456789").inverted), priceMax: priceMax!)
         }
 
+    }
+    
+    func timerLabel(_ timerLabel: MZTimerLabel!, customTextToDisplayAtTime time: TimeInterval) -> String! {
+        let seconds = time.truncatingRemainder(dividingBy: 60)
+        let minutes = (time / 60).truncatingRemainder(dividingBy: 60)
+        let hours = time / 3600
+        return String(format: "%02.0f:%02.0f:%02.0f", hours, minutes, seconds)
     }
 
 }

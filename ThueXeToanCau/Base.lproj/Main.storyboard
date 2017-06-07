@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F43c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7LK-vG-2a9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16G12b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="7LK-vG-2a9">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -2356,7 +2356,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzE-3d-rj1" customClass="CountdownLabel" customModule="CountdownLabel">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzE-3d-rj1" customClass="MZTimerLabel">
                                                             <rect key="frame" x="277" y="0.0" width="38" height="43"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -2583,7 +2583,7 @@
                                             <outlet property="dateToLabel" destination="aZl-AA-Iu0" id="cuq-bz-ITr"/>
                                             <outlet property="priceAuction" destination="iaJ-t7-Zwe" id="Qj9-Kq-xVD"/>
                                             <outlet property="priceBuyLabel" destination="0f8-8P-Nwy" id="qdd-dE-2yB"/>
-                                            <outlet property="timeCountDownLabel" destination="kzE-3d-rj1" id="sKK-9b-6HN"/>
+                                            <outlet property="timeCountDownLabel" destination="kzE-3d-rj1" id="hN6-Ho-qPR"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
