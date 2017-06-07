@@ -75,14 +75,20 @@ class DriverAuctionCell: UITableViewCell {
         dateToLabel.text = ticket.dateTo.serverDateTimeTo(format: "dd/MM HH:mm")
         id = ticket.id
 
-        timeCountDownLabel.setCountDownDate(ticket.dateBookDate.addingTimeInterval(-15*60))
-        
-//        if ticket.priceBookInt > CONFIG_DATA.LIMIT_PRICE_CHANGE_TIME_AUCTION {
+        timeCountDownLabel.timeFormat = "hh:mm:ss"
+
+        if ticket.priceBookInt > CONFIG_DATA.LIMIT_PRICE_CHANGE_TIME_AUCTION {
 //            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-5*3600))
-//        }
-//        else {
+//            timeCountDownLabel.setCountDownTime(Date.current(), minutes: ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())/60)
+            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-5*3600))
+
+        }
+        else {
 //            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-3600))
-//        }
+//            timeCountDownLabel.setCountDownDate(Date.current(), targetDate: ticket.dateFromDate.addingTimeInterval(-3600))
+//            timeCountDownLabel.setCountDownTime(Date.current(), minutes: ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())/60)
+            timeCountDownLabel.setCountDownDate(ticket.dateFromDate.addingTimeInterval(-3600))
+        }
 
         timeCountDownLabel.start()
         priceMax = ticket.priceMax

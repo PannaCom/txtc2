@@ -38,7 +38,15 @@ extension String {
     func serverDateTimeToDate() -> Date {
         let serverFormat = DateFormatter()
         serverFormat.dateFormat = "yyyy-MM-ddHH:mm:ss"
-        return serverFormat.date(from: self.replacingOccurrences(of: "T", with: ""))!
+        var str: String
+
+        if self.characters.count > 19 {
+            str = self.substring(to: self.index(self.startIndex, offsetBy: 19))
+        }
+        else {
+            str = self
+        }
+        return serverFormat.date(from: str.replacingOccurrences(of: "T", with: ""))!
     }
 }
 
@@ -50,5 +58,13 @@ extension SwiftMessages {
             view.configureTheme(theme)
             return view
         }
+    }
+}
+
+extension Date {
+    public static func current() -> Date {
+        let secondsFromGMT = TimeZone.current.secondsFromGMT()
+
+        return Date().addingTimeInterval(TimeInterval(secondsFromGMT))
     }
 }
