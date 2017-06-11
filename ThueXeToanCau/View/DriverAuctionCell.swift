@@ -10,8 +10,8 @@ import UIKit
 import MZTimerLabel
 
 protocol DriverAuctionDelegate {
-    func buyNowButtonTouched(bookingId: String, priceBuy: String)
-    func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String)
+    func buyNowButtonTouched(bookingId: String, priceBuy: String, timeRemain: TimeInterval)
+    func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String, timeRemain: TimeInterval)
 }
 
 class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
@@ -78,8 +78,6 @@ class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
 
         if ticket.priceBookInt > CONFIG_DATA.LIMIT_PRICE_CHANGE_TIME_AUCTION {
             timeCountDownLabel.setCountDownTo(Date().addingTimeInterval(ticket.dateFromDate.addingTimeInterval(-5*3600).timeIntervalSince(Date.current())))
-            
-
         }
         else {
             timeCountDownLabel.setCountDownTo(Date().addingTimeInterval(ticket.dateFromDate.addingTimeInterval(-3600).timeIntervalSince(Date.current())))
@@ -91,25 +89,37 @@ class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
     }
 
     @IBAction func buyNowButtonTouched(_ sender: Any) {
-        if self.timeCountDownLabel.getTimeRemaining() <= 0 {
-            delegate?.buyNowButtonTouched(bookingId: "-1", priceBuy: "")
+        let userDefault = UserDefaults.standard
+        let nextTimeAuction:Date = userDefault.object(forKey: "nextTimeAuction") as! Date
+        if Date() < nextTimeAuction {
+            delegate?.buyNowButtonTouched(bookingId: "-2", priceBuy: "", timeRemain: timeCountDownLabel.getTimeRemaining())
         }
         else {
-            let priceBuy = priceBuyLabel.text!.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
-            delegate?.buyNowButtonTouched(bookingId: id!, priceBuy: priceBuy.trimmingCharacters(in: CharacterSet.init(charactersIn: "0123456789").inverted))
+            if self.timeCountDownLabel.getTimeRemaining() <= 0 {
+                delegate?.buyNowButtonTouched(bookingId: "-1", priceBuy: "", timeRemain: timeCountDownLabel.getTimeRemaining())
+            }
+            else {
+                let priceBuy = priceBuyLabel.text!.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
+                delegate?.buyNowButtonTouched(bookingId: id!, priceBuy: priceBuy.trimmingCharacters(in: CharacterSet.init(charactersIn: "0123456789").inverted), timeRemain: timeCountDownLabel.getTimeRemaining())
+            }
         }
-
     }
 
     @IBAction func auctionButtonTouched(_ sender: Any) {
-        if self.timeCountDownLabel.getTimeRemaining() <= 0 {
-            delegate?.auctionButtonTouched(bookingId: "-1", priceBuy: "", priceMax: "")
+        let userDefault = UserDefaults.standard
+        let nextTimeAuction:Date = userDefault.object(forKey: "nextTimeAuction") as! Date
+        if Date() < nextTimeAuction {
+            delegate?.auctionButtonTouched(bookingId: "-2", priceBuy: "", priceMax: "", timeRemain: timeCountDownLabel.getTimeRemaining())
         }
         else {
-            let priceBuy = priceBuyLabel.text!.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
-            delegate?.auctionButtonTouched(bookingId: id!, priceBuy: priceBuy.trimmingCharacters(in: CharacterSet.init(charactersIn: "0123456789").inverted), priceMax: priceMax!)
+            if self.timeCountDownLabel.getTimeRemaining() <= 0 {
+                delegate?.auctionButtonTouched(bookingId: "-1", priceBuy: "", priceMax: "", timeRemain: timeCountDownLabel.getTimeRemaining())
+            }
+            else {
+                let priceBuy = priceBuyLabel.text!.replacingOccurrences(of: ",", with: "").replacingOccurrences(of: ".", with: "")
+                delegate?.auctionButtonTouched(bookingId: id!, priceBuy: priceBuy.trimmingCharacters(in: CharacterSet.init(charactersIn: "0123456789").inverted), priceMax: priceMax!, timeRemain: timeCountDownLabel.getTimeRemaining())
+            }
         }
-
     }
     
     func timerLabel(_ timerLabel: MZTimerLabel!, customTextToDisplayAtTime time: TimeInterval) -> String! {

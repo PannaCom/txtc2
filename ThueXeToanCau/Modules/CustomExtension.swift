@@ -46,7 +46,8 @@ extension String {
         else {
             str = self
         }
-        return serverFormat.date(from: str.replacingOccurrences(of: "T", with: ""))!
+        let secondsFromGMT = TimeZone.current.secondsFromGMT()
+        return serverFormat.date(from: str.replacingOccurrences(of: "T", with: ""))!.addingTimeInterval(TimeInterval(secondsFromGMT))
     }
 }
 

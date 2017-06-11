@@ -115,6 +115,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
             .subscribe(onNext: {
 
                 if self.checkTextFieldEmpty() {
+                    self.bookingButton.isEnabled = false
                     var carType:String = self.carTypeTextField.text!
                     carType = carType.substring(to: (carType.range(of: " ")?.lowerBound)!)
                     var airportName:String = ""
@@ -179,6 +180,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                             NotificationCenter.default.post(name: Notification.Name(NOTIFICATION_STRING.PASSENGER_BOOKING_DONE), object: bookingResult)
                         }
                         else {
+                            self.bookingButton.isEnabled = true
                             SwiftMessages.show(title: "Lỗi", message: "Hãy kiểm tra lại kết nội internet", layout: .MessageViewIOS8, theme: .error)
                         }
 

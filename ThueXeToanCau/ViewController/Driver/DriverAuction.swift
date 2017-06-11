@@ -180,74 +180,86 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         return tickets.count
     }
 
-    func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String) {
-        if bookingId == "-1" {
-            SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
+    func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String, timeRemain: TimeInterval) {
+        if bookingId == "-2" {
+            SwiftMessages.show(title: "Lỗi", message: "Không thể đấu giá nhiều chuyến cùng lúc!", layout: .MessageViewIOS8, theme: .error)
         }
         else {
-            if canAuction! {
-                print("auction")
-                let appearance = SCLAlertView.SCLAppearance(
-                    showCloseButton: false
-                )
-                let alert = SCLAlertView(appearance: appearance)
-                let priceTextField = alert.addTextField("Nhập giá đấu")
-                priceTextField.keyboardType = .numberPad
-                _ = alert.addButton("Xong", backgroundColor: UIColor.green, textColor: UIColor.white, showDurationStatus: true, action: {
-                    if Int(priceBuy)! > Int(priceTextField.text!)! || Int(priceMax)! < Int(priceTextField.text!)! {
-                        SwiftMessages.show(title:"Lỗi:", message: "Giá đấu phải nằm trong khoảng \(priceBuy.customNumberStyle()) - \(priceMax.customNumberStyle())", layout: .MessageViewIOS8, theme: .error)
-                    }
-                    else {
-                        self.auction(bookingId: bookingId, priceAuction: priceTextField.text!, type: "0")
-                    }
-                    alert.dismiss(animated: true, completion: nil)
-                })
-                _ = alert.addButton("Hủy", backgroundColor: UIColor.darkGray, textColor: UIColor.white, showDurationStatus: true, action: {
-                    alert.dismiss(animated: true, completion: nil)
-                })
-                alert.showEdit("Đấu giá", subTitle: "Khoảng giá: \(priceBuy.customNumberStyle()) đ - \(priceMax.customNumberStyle()) đ")
+            if bookingId == "-1" || timeRemain <= 0 {
+                SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
             }
             else {
-                SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                if canAuction! {
+                    print("auction")
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alert = SCLAlertView(appearance: appearance)
+                    let priceTextField = alert.addTextField("Nhập giá đấu")
+                    priceTextField.keyboardType = .numberPad
+                    _ = alert.addButton("Xong", backgroundColor: UIColor.green, textColor: UIColor.white, showDurationStatus: true, action: {
+                        if Int(priceBuy)! > Int(priceTextField.text!)! || Int(priceMax)! < Int(priceTextField.text!)! {
+                            SwiftMessages.show(title:"Lỗi:", message: "Giá đấu phải nằm trong khoảng \(priceBuy.customNumberStyle()) - \(priceMax.customNumberStyle())", layout: .MessageViewIOS8, theme: .error)
+                        }
+                        else {
+                            self.auction(bookingId: bookingId, priceAuction: priceTextField.text!, type: "0")
+                        }
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                    _ = alert.addButton("Hủy", backgroundColor: UIColor.darkGray, textColor: UIColor.white, showDurationStatus: true, action: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                    alert.showEdit("Đấu giá", subTitle: "Khoảng giá: \(priceBuy.customNumberStyle()) đ - \(priceMax.customNumberStyle()) đ")
+                }
+                else {
+                    SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                }
             }
         }
-
     }
 
-    func buyNowButtonTouched(bookingId: String, priceBuy: String) {
-        if bookingId == "-1" {
-            SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
-            print(priceBuy)
+    func buyNowButtonTouched(bookingId: String, priceBuy: String, timeRemain: TimeInterval) {
+        if bookingId == "-2" {
+            SwiftMessages.show(title: "Lỗi", message: "Không thể đấu giá nhiều chuyến cùng lúc!", layout: .MessageViewIOS8, theme: .error)
         }
         else {
-            if canAuction! {
-                let appearance = SCLAlertView.SCLAppearance(
-                    showCloseButton: false
-                )
-                let alert = SCLAlertView(appearance: appearance)
-                _ = alert.addButton("Đồng ý", backgroundColor: UIColor.green, textColor: UIColor.white, showDurationStatus: true, action: {
-                    self.auction(bookingId: bookingId, priceAuction: priceBuy, type: "1")
-                    alert.dismiss(animated: true, completion: nil)
-                })
-                _ = alert.addButton("Hủy", backgroundColor: UIColor.darkGray, textColor: UIColor.white, showDurationStatus: true, action: {
-                    alert.dismiss(animated: true, completion: nil)
-                })
-                alert.showEdit("Mua ngay", subTitle: "Bạn muốn mua ngay với giá: \(priceBuy.customNumberStyle())?")
-
+            if bookingId == "-1" || timeRemain <= 0 {
+                SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
             }
             else {
-                SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
-            }
+                if canAuction! {
+                    let appearance = SCLAlertView.SCLAppearance(
+                        showCloseButton: false
+                    )
+                    let alert = SCLAlertView(appearance: appearance)
+                    _ = alert.addButton("Đồng ý", backgroundColor: UIColor.green, textColor: UIColor.white, showDurationStatus: true, action: {
+                        self.auction(bookingId: bookingId, priceAuction: priceBuy, type: "1")
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                    _ = alert.addButton("Hủy", backgroundColor: UIColor.darkGray, textColor: UIColor.white, showDurationStatus: true, action: {
+                        alert.dismiss(animated: true, completion: nil)
+                    })
+                    alert.showEdit("Mua ngay", subTitle: "Bạn muốn mua ngay với giá: \(priceBuy.customNumberStyle())?")
 
+                }
+                else {
+                    SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                }
+
+            }
         }
     }
     
     func auction(bookingId: String, priceAuction: String, type: String) {
+        
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             switch response.result.value! {
                 case "1":
                     print("thành công")
                     SwiftMessages.show(title: "Đấu giá thành công", message: "Hãy chờ kết quả đấu giá", layout: .MessageViewIOS8, theme: .success)
+                    let userDefault = UserDefaults.standard
+                    userDefault.set(Date(), forKey: "nextTimeAuction")
+                    userDefault.synchronize()
                     self.getMoneyDriver()
                 case "0":
                     print("đã có người mua")
