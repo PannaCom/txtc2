@@ -113,9 +113,8 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
 
         bookingButton.rx.tap
             .subscribe(onNext: {
-
+                self.bookingButton.isEnabled = false
                 if self.checkTextFieldEmpty() {
-                    self.bookingButton.isEnabled = false
                     var carType:String = self.carTypeTextField.text!
                     carType = carType.substring(to: (carType.range(of: " ")?.lowerBound)!)
                     var airportName:String = ""
@@ -154,6 +153,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
 
                         if response.result.isFailure {
                             print("Error Load Data: \(String(describing: response.result.error))")
+                            self.bookingButton.isEnabled = true
                         }
                         if response.result.isSuccess {
                             let serverResponse = response.result.value?.characters.split(separator: Character.init("_")).map(String.init)
@@ -188,6 +188,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
                 }
                 else {
                     SwiftMessages.show(title: "Lỗi", message: "Hãy điền đầy đủ thông tin", layout: .MessageViewIOS8, theme: .error)
+                    self.bookingButton.isEnabled = true
                 }
             })
             .addDisposableTo(disposeBag)

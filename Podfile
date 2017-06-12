@@ -14,7 +14,6 @@ target 'ThueXeToanCau' do
     pod 'KRProgressHUD'
     pod 'ColorMatchTabs'
     pod 'TextFieldEffects'
-#    pod 'RxSwift'
     pod 'RxCocoa'
     pod 'Alamofire'
     pod 'SwiftyJSON'
@@ -30,6 +29,6 @@ target 'ThueXeToanCau' do
     
     pod 'Fabric'
     pod 'Crashlytics'
-    
+
     pod 'MZTimerLabel'
 end

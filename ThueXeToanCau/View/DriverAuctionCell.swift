@@ -90,7 +90,11 @@ class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
 
     @IBAction func buyNowButtonTouched(_ sender: Any) {
         let userDefault = UserDefaults.standard
-        let nextTimeAuction:Date = userDefault.object(forKey: "nextTimeAuction") as! Date
+        var nextTimeAuction:Date = Date()
+        if userDefault.object(forKey: "nextTimeAuction") != nil {
+            nextTimeAuction = userDefault.object(forKey: "nextTimeAuction") as! Date
+        }
+
         if Date() < nextTimeAuction {
             delegate?.buyNowButtonTouched(bookingId: "-2", priceBuy: "", timeRemain: timeCountDownLabel.getTimeRemaining())
         }
@@ -107,7 +111,10 @@ class DriverAuctionCell: UITableViewCell, MZTimerLabelDelegate {
 
     @IBAction func auctionButtonTouched(_ sender: Any) {
         let userDefault = UserDefaults.standard
-        let nextTimeAuction:Date = userDefault.object(forKey: "nextTimeAuction") as! Date
+        var nextTimeAuction:Date = Date()
+        if userDefault.object(forKey: "nextTimeAuction") != nil {
+            nextTimeAuction = userDefault.object(forKey: "nextTimeAuction") as! Date
+        }
         if Date() < nextTimeAuction {
             delegate?.auctionButtonTouched(bookingId: "-2", priceBuy: "", priceMax: "", timeRemain: timeCountDownLabel.getTimeRemaining())
         }

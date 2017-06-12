@@ -190,7 +190,15 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
             else {
                 if canAuction! {
-                    print("auction")
+
+                    let ticketAuction = tickets.first(where: {t in
+                        return t.id == bookingId
+                    })
+                    if (ticketAuction?.dateFromDate)! <= Date.current() {
+                         SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                        return
+                    }
+
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
                     )
@@ -240,7 +248,6 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                         alert.dismiss(animated: true, completion: nil)
                     })
                     alert.showEdit("Mua ngay", subTitle: "Bạn muốn mua ngay với giá: \(priceBuy.customNumberStyle())?")
-
                 }
                 else {
                     SwiftMessages.show(title: "Lỗi", message: "Tài khoản này không thể đấu giá!", layout: .MessageViewIOS8, theme: .error)
@@ -260,15 +267,45 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     let userDefault = UserDefaults.standard
                     userDefault.set(Date(), forKey: "nextTimeAuction")
                     userDefault.synchronize()
+                    if type == "1" {
+                        self.checkWhoWin(bookingId: bookingId)
+                    }
                     self.getMoneyDriver()
                 case "0":
                     print("đã có người mua")
                     SwiftMessages.show(title: "Đấu giá thất bại", message: "Đã có người mua trước", layout: .MessageViewIOS8, theme: .error)
                 case "-1":
                     print("Lỗi mạng")
-                    SwiftMessages.show(title: "Lỗi mạng", message: "", layout: .MessageViewIOS8, theme: .error)
+                    SwiftMessages.show(title: "Lỗi mạng", message: "Hãy thử lại", layout: .MessageViewIOS8, theme: .error)
             default:
                 break
+            }
+        })
+    }
+
+    func checkWhoWin(bookingId: String) {
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.WHO_WIN_DRIVER, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
+            let result = response.result.value!
+            if result.characters.count > 10 {
+                let resultInfo = result.components(separatedBy: "_")
+                let resultAlert: UIAlertController = UIAlertController(title: "Người thắng:", message: "Số điện thoại: \(resultInfo[0]), thắng chuyến xe số: #\(resultInfo[1]), Số tiền còn lại: \(resultInfo[2].customNumberStyle()) đồng", preferredStyle: UIAlertControllerStyle.alert)
+                let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+                    resultAlert.dismiss(animated: true, completion: nil)
+                })
+                resultAlert.addAction(dismiss)
+                self.present(resultAlert, animated: true, completion: nil)
+            }
+            else {
+                switch result {
+                case "-1":
+                    print("Lỗi mạng")
+                //                SwiftMessages.show(title: "Lỗi mạng", message: "Hãy thử lại", layout: .MessageViewIOS8, theme: .error)
+                case "-2":
+                    print("Thua")
+                    SwiftMessages.show(title: "", message: "Hiện tại bạn chưa phải người thắng đấu giá", layout: .MessageViewIOS8, theme: .error)
+                default:
+                    break
+                }
             }
         })
     }
