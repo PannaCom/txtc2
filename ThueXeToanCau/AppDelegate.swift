@@ -12,6 +12,7 @@ import GooglePlaces
 import Siren
 import Fabric
 import Crashlytics
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         siren.checkVersion(checkType: .immediately)
 
         Fabric.with([Crashlytics.self])
+
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+                // Enable or disable features based on authorization.
+            }
+        }
+        else {
+            if(UIApplication.instancesRespond(to: #selector(UIApplication.registerUserNotificationSettings(_:)))) {
+                UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert, .badge], categories: nil))
+            }
+        }
+
 
         return true
     }
@@ -56,6 +70,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        application.applicationIconBadgeNumber = 0
+//        print(notification.userInfo!)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationCheckWhoWin"), object: nil, userInfo: notification.userInfo)
+        
     }
 
 }

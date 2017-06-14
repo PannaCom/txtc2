@@ -17,6 +17,7 @@ import ESPullToRefresh
 import Alamofire
 import SCLAlertView
 import DropDown
+import UserNotifications
 
 class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegate, DriverAuctionDelegate, UIScrollViewDelegate {
 
@@ -42,6 +43,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     var timerPostDriverGPS: Timer?
     var driverStatus = DRIVER_STATUS.ONLINE
 
+    // MARK: - View Cycle Life
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -146,7 +148,22 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.updateLocationPostDriverGPS()
         timerPostDriverGPS = Timer.scheduledTimer(timeInterval: CONFIG_DATA.TIME_SCHEDULE_POST_DRIVER_LOCATION, target: self, selector: #selector(updateLocationPostDriverGPS), userInfo: nil, repeats: true)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveNotiCheckWhoWin(noti:)), name: NSNotification.Name(rawValue: "notificationCheckWhoWin"), object: nil)
     }
+
+    func receiveNotiCheckWhoWin(noti: Notification) {
+        if let info = noti.userInfo as? Dictionary<String,Any>  {
+            print(info)
+            SwiftMessages.show(title: "Hết thời gian đấu giá", message: info["bookingId"]! as! String, layout: .MessageViewIOS8, theme: .info)
+            checkWhoWin(bookingId: info["bookingId"] as! String)
+        }
+        else {
+            print("wrong userInfo type")
+        }
+
+//        checkWhoWin(bookingId: "")
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         canAuction = String(describing: (STATIC_DATA.DRIVER_INFO[DRIVER_INFO.STATUS]!)!) == "0" ? true : false
@@ -163,7 +180,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             self.tableView.es_startPullToRefresh()
         }
     }
-
+    // MARK: - TableView Delegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: CELL_ID.DRIVER_AUCTION, for: indexPath) as? DriverAuctionCell{
             cell.updateUI(ticket: tickets[indexPath.row])
@@ -180,7 +197,83 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         return tickets.count
     }
 
+    // MARK: - ScrollView Delegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.tableView {
+
+            if (lastContentOffsetY > scrollView.contentOffset.y && scrollView.contentOffset.y < scrollView.contentSize.height - SCREEN_HEIGHT) || scrollView.contentOffset.y <= 0{
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-88, width: SCREEN_WIDTH, height: 88)
+                })
+            }
+            else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 0)
+                })
+            }
+            lastContentOffsetY = scrollView.contentOffset.y
+        }
+    }
+
+    // MARK: - Events
+    @IBAction func changeStatusButtonTouched(_ sender: Any) {
+        if isBusy == true {
+            isBusy = !isBusy!
+            driverStatus = DRIVER_STATUS.ONLINE
+            self.updateLocationPostDriverGPS()
+            timerPostDriverGPS = Timer.scheduledTimer(timeInterval: CONFIG_DATA.TIME_SCHEDULE_POST_DRIVER_LOCATION, target: self, selector: #selector(updateLocationPostDriverGPS), userInfo: nil, repeats: true)
+            changeStatusButton.setTitle("Chờ khách", for: UIControlState.normal)
+            changeStatusButton.layer.backgroundColor = UIColor.init(red: 22.0/255, green: 189.0/255, blue: 12.0/255, alpha: 1.0).cgColor
+        }
+        else {
+            isBusy = !isBusy!
+            driverStatus = DRIVER_STATUS.OFFLINE
+            self.updateLocationPostDriverGPS()
+            timerPostDriverGPS?.invalidate()
+            timerPostDriverGPS = nil
+            changeStatusButton.setTitle("Bận", for: UIControlState.normal)
+            changeStatusButton.layer.backgroundColor = UIColor.init(red: 254.0/255, green: 3.0/255, blue: 5.0/255, alpha: 1.0).cgColor
+        }
+    }
+
+    @IBAction func bookingThuaKhachButtonTouched(_ sender: Any) {
+        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc: PassengerLogin = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.PASSENGER_LOGIN) as! PassengerLogin
+        vc.isDriver = true
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    @IBAction func bookingFindPassengerButtonTouched(_ sender: Any) {
+        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_BOOKING)
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    @IBAction func unwinToDriverGetBooking(segue: UIStoryboardSegue) {}
+
+    func updateLocationPostDriverGPS() {
+        Location.getLocation(accuracy: .navigation, frequency: .continuous, success: { foundLocation in
+            self.postDrive(coordinate: foundLocation.1.coordinate)
+        }, error: { error in
+            print(error)
+            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
+                self.postDrive(coordinate: ipLocation.1.coordinate)
+            }, error: { error in
+                print(error)
+            }).resume()
+        }).resume()
+    }
+    // MARK: - Custom Method
+    func postDrive(coordinate: CLLocationCoordinate2D) {
+        let params = ["car_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "status" : driverStatus, "lon" : String.init(format: "%.6f", (coordinate.longitude)), "lat" : String.init(format: "%.6f", (coordinate.latitude))]
+        AlamofireManager.sharedInstance.manager.request(URL_APP_API.POST_DRIVER_COORDINATE, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {
+            response in
+//            print(response.result.value!)
+        })
+    }
+
     func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String, timeRemain: TimeInterval) {
+        self.notiCheckWhoWin(date: Date().addingTimeInterval(5), bookingId: bookingId)
         if bookingId == "-2" {
             SwiftMessages.show(title: "Lỗi", message: "Không thể đấu giá nhiều chuyến cùng lúc!", layout: .MessageViewIOS8, theme: .error)
         }
@@ -195,7 +288,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                         return t.id == bookingId
                     })
                     if (ticketAuction?.dateFromDate)! <= Date.current() {
-                         SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                        SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
                         return
                     }
 
@@ -256,32 +349,33 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
         }
     }
-    
+
     func auction(bookingId: String, priceAuction: String, type: String) {
-        
+
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             switch response.result.value! {
-                case "1":
-                    print("thành công")
-                    SwiftMessages.show(title: "Đấu giá thành công", message: "Hãy chờ kết quả đấu giá", layout: .MessageViewIOS8, theme: .success)
-                    let userDefault = UserDefaults.standard
-                    userDefault.set(Date(), forKey: "nextTimeAuction")
-                    userDefault.synchronize()
-                    if type == "1" {
-                        self.checkWhoWin(bookingId: bookingId)
-                    }
-                    self.getMoneyDriver()
-                case "0":
-                    print("đã có người mua")
-                    SwiftMessages.show(title: "Đấu giá thất bại", message: "Đã có người mua trước", layout: .MessageViewIOS8, theme: .error)
-                case "-1":
-                    print("Lỗi mạng")
-                    SwiftMessages.show(title: "Lỗi mạng", message: "Hãy thử lại", layout: .MessageViewIOS8, theme: .error)
+            case "1":
+                print("thành công")
+                SwiftMessages.show(title: "Đấu giá thành công", message: "Hãy chờ kết quả đấu giá", layout: .MessageViewIOS8, theme: .success)
+                let userDefault = UserDefaults.standard
+                userDefault.set(Date(), forKey: "nextTimeAuction")
+                userDefault.synchronize()
+                if type == "1" {
+                    self.checkWhoWin(bookingId: bookingId)
+                }
+                self.getMoneyDriver()
+            case "0":
+                print("đã có người mua")
+                SwiftMessages.show(title: "Đấu giá thất bại", message: "Đã có người mua trước", layout: .MessageViewIOS8, theme: .error)
+            case "-1":
+                print("Lỗi mạng")
+                SwiftMessages.show(title: "Lỗi mạng", message: "Hãy thử lại", layout: .MessageViewIOS8, theme: .error)
             default:
                 break
             }
         })
     }
+
 
     func checkWhoWin(bookingId: String) {
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.WHO_WIN_DRIVER, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
@@ -310,82 +404,60 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
         })
     }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.tableView {
-
-            if (lastContentOffsetY > scrollView.contentOffset.y && scrollView.contentOffset.y < scrollView.contentSize.height - SCREEN_HEIGHT) || scrollView.contentOffset.y <= 0{
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT-88, width: SCREEN_WIDTH, height: 88)
-                })
-            }
-            else {
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.footerView.frame = CGRect.init(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: 0)
-                })
-            }
-            lastContentOffsetY = scrollView.contentOffset.y
-        }
-    }
-
     func getMoneyDriver() {
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.GET_MONEY_DRIVER, method: HTTPMethod.post, parameters: ["id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {response in
             self.moneyLabel.text = response.result.value!.customNumberStyle() + " đồng"
         })
     }
-    @IBAction func changeStatusButtonTouched(_ sender: Any) {
-        if isBusy == true {
-            isBusy = !isBusy!
-            driverStatus = DRIVER_STATUS.ONLINE
-            self.updateLocationPostDriverGPS()
-            timerPostDriverGPS = Timer.scheduledTimer(timeInterval: CONFIG_DATA.TIME_SCHEDULE_POST_DRIVER_LOCATION, target: self, selector: #selector(updateLocationPostDriverGPS), userInfo: nil, repeats: true)
-            changeStatusButton.setTitle("Chờ khách", for: UIControlState.normal)
-            changeStatusButton.layer.backgroundColor = UIColor.init(red: 22.0/255, green: 189.0/255, blue: 12.0/255, alpha: 1.0).cgColor
+
+    func notiCheckWhoWin(date: Date, bookingId: String) {
+        let userInfo = ["bookingId": bookingId]
+
+        if #available(iOS 10.0, *) {
+            let center = UNUserNotificationCenter.current()
+            let content = UNMutableNotificationContent()
+            content.title = "Đã hết thời gian đấu giá"
+            content.body = "Xem kết quả đấu giá ngay."
+            content.userInfo = userInfo
+            content.sound = UNNotificationSound.default()
+
+            let calendar = Calendar(identifier: .gregorian)
+            let components = calendar.dateComponents(in: .current, from: date)
+            let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute)
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
+
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            center.add(request) {(error) in
+                if let error = error {
+                    print("Uh oh! We had an error: \(error)")
+                }
+            }
         }
         else {
-            isBusy = !isBusy!
-            driverStatus = DRIVER_STATUS.OFFLINE
-            self.updateLocationPostDriverGPS()
-            timerPostDriverGPS?.invalidate()
-            timerPostDriverGPS = nil
-            changeStatusButton.setTitle("Bận", for: UIControlState.normal)
-            changeStatusButton.layer.backgroundColor = UIColor.init(red: 254.0/255, green: 3.0/255, blue: 5.0/255, alpha: 1.0).cgColor
+            // iOS 9
+            let notification = UILocalNotification()
+            notification.fireDate = date
+            notification.alertBody = "Đã hết thời gian đấu giá. Xem kết quả đấu giá ngay."
+            notification.userInfo = userInfo
+            notification.soundName = UILocalNotificationDefaultSoundName
+            UIApplication.shared.scheduleLocalNotification(notification)
         }
     }
 
-    @IBAction func bookingThuaKhachButtonTouched(_ sender: Any) {
-        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc: PassengerLogin = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.PASSENGER_LOGIN) as! PassengerLogin
-        vc.isDriver = true
-        self.present(vc, animated: true, completion: nil)
-    }
 
-    @IBAction func bookingFindPassengerButtonTouched(_ sender: Any) {
-        let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let vc = mainStoryboard.instantiateViewController(withIdentifier: STORYBOARD_ID.DRIVER_BOOKING)
-        self.present(vc, animated: true, completion: nil)
-    }
-
-    @IBAction func unwinToDriverGetBooking(segue: UIStoryboardSegue) {}
-
-    func updateLocationPostDriverGPS() {
-        Location.getLocation(accuracy: .navigation, frequency: .continuous, success: { foundLocation in
-            self.postDrive(coordinate: foundLocation.1.coordinate)
-        }, error: { error in
-            print(error)
-            Location.getLocation(accuracy: .IPScan(IPService(.freeGeoIP)), frequency: .oneShot, success: { ipLocation in
-                self.postDrive(coordinate: ipLocation.1.coordinate)
-            }, error: { error in
-                print(error)
-            }).resume()
-        }).resume()
-    }
-
-    func postDrive(coordinate: CLLocationCoordinate2D) {
-        let params = ["car_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "status" : driverStatus, "lon" : String.init(format: "%.6f", (coordinate.longitude)), "lat" : String.init(format: "%.6f", (coordinate.latitude))]
-        AlamofireManager.sharedInstance.manager.request(URL_APP_API.POST_DRIVER_COORDINATE, method: HTTPMethod.post, parameters: params, encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: {
-            response in
-//            print(response.result.value!)
-        })
-    }
 }
 
+extension DriverAuction: UNUserNotificationCenterDelegate {
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+    }
+
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        SwiftMessages.show(title: "Test", message: "Hết thời gian đấu giá", layout: .CardView, theme: .error)
+    }
+}

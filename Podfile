@@ -31,4 +31,5 @@ target 'ThueXeToanCau' do
     pod 'Crashlytics'
 
     pod 'MZTimerLabel'
+    pod 'SwiftyUserDefaults'
 end

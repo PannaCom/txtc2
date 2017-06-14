@@ -222,6 +222,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
         whoHireTextField.text = ""
         dateFromTextField.text = ""
         dateToTextField.text = ""
+        self.bookingButton.isEnabled = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -430,7 +431,7 @@ class PassengerBookingInfo: UIViewController, UITextFieldDelegate {
         }
     }
 
-// MARK: --UITextFieldDelegate
+// MARK: UITextFieldDelegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textFieldSelected != textField {
             self.view.endEditing(true)
