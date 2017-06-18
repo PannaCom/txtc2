@@ -15,7 +15,7 @@ import Crashlytics
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
@@ -36,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let center = UNUserNotificationCenter.current()
             center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
                 // Enable or disable features based on authorization.
+                if !granted {
+                    print("something went wrong")
+                }
+                else {
+                    print("request noti ios 10")
+                }
             }
         }
         else {
@@ -78,6 +84,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationCheckWhoWin"), object: nil, userInfo: notification.userInfo)
         
     }
-
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("noti receive on ios 10")
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationCheckWhoWin"), object: nil, userInfo: notification.userInfo)
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("noti ios 10")
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationCheckWhoWin"), object: nil, userInfo: notification.request.content.userInfo)
+    }
+    
 }
 

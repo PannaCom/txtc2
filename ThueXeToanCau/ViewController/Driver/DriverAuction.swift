@@ -68,16 +68,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self?.tickets.removeAll()
                     for ticket in ticketResponse {
                         let ticket = PassengerTicket.init(withJSON: ticket)
-//                        if ticket.priceBookDouble >= 1000000 {
-//                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24*5, since: Date()) {
-                                self?.tickets.append(ticket)
-//                            }
-//                        }
-//                        else {
-//                            if ticket.dateFromDate > Date.init(timeInterval: -60*60*24, since: Date()) {
-//                                self?.tickets.append(ticket)
-//                            }
-//                        }
+                        self?.tickets.append(ticket)
                     }
                     self?.tableView.reloadData()
                     self?.tableView.es_stopPullToRefresh()
@@ -154,14 +145,12 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     func receiveNotiCheckWhoWin(noti: Notification) {
         if let info = noti.userInfo as? Dictionary<String,Any>  {
             print(info)
-            SwiftMessages.show(title: "Hết thời gian đấu giá", message: info["bookingId"]! as! String, layout: .MessageViewIOS8, theme: .info)
+            SwiftMessages.show(title: "Hết thời gian đấu giá", message: "#\(info["bookingId"]!)", layout: .MessageViewIOS8, theme: .success)
             checkWhoWin(bookingId: info["bookingId"] as! String)
         }
         else {
             print("wrong userInfo type")
         }
-
-//        checkWhoWin(bookingId: "")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -273,7 +262,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
 
     func auctionButtonTouched(bookingId: String, priceBuy: String, priceMax: String, timeRemain: TimeInterval) {
-        self.notiCheckWhoWin(date: Date().addingTimeInterval(5), bookingId: bookingId)
+        
         if bookingId == "-2" {
             SwiftMessages.show(title: "Lỗi", message: "Không thể đấu giá nhiều chuyến cùng lúc!", layout: .MessageViewIOS8, theme: .error)
         }
@@ -287,7 +276,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     let ticketAuction = tickets.first(where: {t in
                         return t.id == bookingId
                     })
-                    if (ticketAuction?.dateFromDate)! <= Date.current() {
+                    if Date(timeInterval: (ticketAuction?.timeEndAuctionBefore)!, since: (ticketAuction?.dateFromDate)!) <= Date.current() {
                         SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
                         return
                     }
@@ -329,6 +318,15 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
             else {
                 if canAuction! {
+                    let ticketAuction = tickets.first(where: {t in
+                        return t.id == bookingId
+                    })
+                    
+                    if Date(timeInterval: (ticketAuction?.timeEndAuctionBefore)!, since: (ticketAuction?.dateFromDate)!) <= Date.current() {
+                        SwiftMessages.show(title: "Lỗi", message: "Đã hết thời gian đấu giá!", layout: .MessageViewIOS8, theme: .error)
+                        return
+                    }
+                    
                     let appearance = SCLAlertView.SCLAppearance(
                         showCloseButton: false
                     )
@@ -351,7 +349,6 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
 
     func auction(bookingId: String, priceAuction: String, type: String) {
-
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.BOOKING_FINAL, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!, "driver_number" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.CAR_NUMBER]!!, "driver_phone" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.PHONE]!!, "price" : priceAuction, "type" : type], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             switch response.result.value! {
             case "1":
@@ -364,6 +361,9 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self.checkWhoWin(bookingId: bookingId)
                 }
                 self.getMoneyDriver()
+                
+                // checkWhoWin after finish time auction
+                self.notiCheckWhoWin(date: Date().addingTimeInterval(15), bookingId: bookingId)
             case "0":
                 print("đã có người mua")
                 SwiftMessages.show(title: "Đấu giá thất bại", message: "Đã có người mua trước", layout: .MessageViewIOS8, theme: .error)
@@ -375,33 +375,45 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             }
         })
     }
-
-
+    
     func checkWhoWin(bookingId: String) {
         AlamofireManager.sharedInstance.manager.request(URL_APP_API.WHO_WIN_DRIVER, method: HTTPMethod.post, parameters: ["id_booking" : bookingId, "id_driver" : STATIC_DATA.DRIVER_INFO[DRIVER_INFO.ID]!!], encoding: JSONEncoding.default, headers: nil).responseString(completionHandler: { response in
             let result = response.result.value!
             if result.characters.count > 10 {
                 let resultInfo = result.components(separatedBy: "_")
-                let resultAlert: UIAlertController = UIAlertController(title: "Người thắng:", message: "Số điện thoại: \(resultInfo[0]), thắng chuyến xe số: #\(resultInfo[1]), Số tiền còn lại: \(resultInfo[2].customNumberStyle()) đồng", preferredStyle: UIAlertControllerStyle.alert)
-                let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
-                    resultAlert.dismiss(animated: true, completion: nil)
-                })
-                resultAlert.addAction(dismiss)
-                self.present(resultAlert, animated: true, completion: nil)
+//                let resultAlert: UIAlertController = UIAlertController(title: "Người thắng:", message: "Số điện thoại: \(resultInfo[0]), thắng chuyến xe số: #\(resultInfo[1]), Số tiền còn lại: \(resultInfo[2].customNumberStyle()) đồng", preferredStyle: UIAlertControllerStyle.alert)
+//                let dismiss = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { action in
+//                    resultAlert.dismiss(animated: true, completion: nil)
+//                })
+//                resultAlert.addAction(dismiss)
+//                self.present(resultAlert, animated: true, completion: nil)
+                
+                self.showResult(title: "Người thắng:", message: "Số điện thoại: \(resultInfo[0]), thắng chuyến xe số: #\(resultInfo[1]), Số tiền còn lại: \(resultInfo[2].customNumberStyle()) đồng")
             }
             else {
                 switch result {
                 case "-1":
                     print("Lỗi mạng")
                 //                SwiftMessages.show(title: "Lỗi mạng", message: "Hãy thử lại", layout: .MessageViewIOS8, theme: .error)
+                    self.showResult(title: "Lỗi mạng", message: "Hãy thử lại")
                 case "-2":
                     print("Thua")
-                    SwiftMessages.show(title: "", message: "Hiện tại bạn chưa phải người thắng đấu giá", layout: .MessageViewIOS8, theme: .error)
+//                    SwiftMessages.show(title: "", message: "Hiện tại bạn chưa phải người thắng đấu giá", layout: .MessageViewIOS8, theme: .error)
+                    self.showResult(title: "", message: "Hiện tại bạn chưa phải người thắng đấu giá")
                 default:
                     break
                 }
             }
         })
+    }
+    
+    func showResult(title: String, message: String) {
+        let resultAlert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let dismiss: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+            resultAlert.dismiss(animated: true, completion: nil)
+        })
+        resultAlert.addAction(dismiss)
+        self.present(resultAlert, animated: true, completion: nil)
     }
 
     func getMoneyDriver() {
@@ -409,11 +421,18 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
             self.moneyLabel.text = response.result.value!.customNumberStyle() + " đồng"
         })
     }
-
+    
+    
+    /// Set time to checkWhoWin when finish auction
+    ///
+    /// - Parameters:
+    ///   - date: when finish auction
+    ///   - bookingId: what id to check
     func notiCheckWhoWin(date: Date, bookingId: String) {
         let userInfo = ["bookingId": bookingId]
 
         if #available(iOS 10.0, *) {
+            // iOS 10 +++
             let center = UNUserNotificationCenter.current()
             let content = UNMutableNotificationContent()
             content.title = "Đã hết thời gian đấu giá"
@@ -423,7 +442,7 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
             let calendar = Calendar(identifier: .gregorian)
             let components = calendar.dateComponents(in: .current, from: date)
-            let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute)
+            let newComponents = DateComponents(calendar: calendar, timeZone: .current, month: components.month, day: components.day, hour: components.hour, minute: components.minute, second: components.second)
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: newComponents, repeats: false)
 
@@ -450,14 +469,15 @@ class DriverAuction: UIViewController, UITableViewDataSource, UITableViewDelegat
 
 }
 
-extension DriverAuction: UNUserNotificationCenterDelegate {
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//extension DriverAuction: UNUserNotificationCenterDelegate {
+//    @available(iOS 10.0, *)
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//        SwiftMessages.show(title: "Test", message: "Hết thời gian đấu giá", layout: .CardView, theme: .error)
+//    }
+//
+//    @available(iOS 10.0, *)
+//    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+//        SwiftMessages.show(title: "Test", message: "Hết thời gian đấu giá", layout: .CardView, theme: .error)
+//    }
+//}
 
-    }
-
-    @available(iOS 10.0, *)
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        SwiftMessages.show(title: "Test", message: "Hết thời gian đấu giá", layout: .CardView, theme: .error)
-    }
-}
